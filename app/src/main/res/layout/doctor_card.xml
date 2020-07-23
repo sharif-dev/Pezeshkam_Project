@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layoutDirection="rtl">
+
+    <ImageView
+        android:id="@+id/doctor_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/me" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/doctor_img"
+        android:orientation="vertical"
+        android:layout_marginRight="20dp">
+        <TextView
+            android:id="@+id/doctor_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="نا مشخص"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:id="@+id/doctor_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="نامشخص"
+            android:layout_marginBottom="20dp"/>
+        <TextView
+            android:id="@+id/doctor_occupation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="نامشخص" />
+    </LinearLayout>
+</RelativeLayout>
