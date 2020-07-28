@@ -9,11 +9,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.logging.LogRecord;
-
-import static com.example.pezeshkam.MainActivity.EMPTY_RESULT;
-import static com.example.pezeshkam.MainActivity.NON_EMPTY_RESULT;
-import static com.example.pezeshkam.MainActivity.RESQUEST_FAILED;
+import static com.example.pezeshkam.Activities.MainActivity.RESQUEST_FAILED;
 
 public class SearchThread extends Thread {
     private String searchField;

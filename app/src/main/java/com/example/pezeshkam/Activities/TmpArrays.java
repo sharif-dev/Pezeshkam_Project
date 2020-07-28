@@ -1,4 +1,4 @@
-package com.example.pezeshkam;
+package com.example.pezeshkam.Activities;
 
 import com.example.pezeshkam.Models.DoctorCard;
 
