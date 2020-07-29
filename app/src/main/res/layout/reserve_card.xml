@@ -6,29 +6,29 @@
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/reserve_card_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="نام دکتر: علیرضا دیزجی"/>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/reserve_card_occupation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/reserve_card_username"
         android:layout_marginTop="11dp"
         android:text="شغل: دندانپزشکی" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/reserve_card_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
+        android:layout_below="@+id/reserve_card_occupation"
         android:layout_marginTop="11dp"
         android:text="تاریخ رزرو: ۱۳۹۸/۱۲/۲۶ ۲۳:۵۵" />
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/reserve_card_switch"
         android:layout_width="79dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -40,10 +40,10 @@
         android:text="رزرو" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/reserve_card_reserved"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/switch2"
+        android:layout_below="@+id/reserve_card_switch"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="323dp"
@@ -51,10 +51,10 @@
         android:text="رزرو شده" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/reserve_card_cancel"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
-        android:layout_below="@+id/textView11"
+        android:layout_below="@+id/reserve_card_reserved"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginStart="309dp"

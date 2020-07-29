@@ -27,6 +27,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.pezeshkam.Adapters.HomepageAdapter;
+import com.example.pezeshkam.Adapters.ProfileAdapter;
 import com.example.pezeshkam.Models.DoctorCard;
 import com.example.pezeshkam.R;
 import com.example.pezeshkam.Threads.HDatasThread;
@@ -39,8 +40,9 @@ public class Profile extends AppCompatActivity {
 
 
     int userID = 3, profID = 3;
-    boolean isDoctor = true;
+    boolean isDoctor = false;
     ListView list1, list2;
+    TextView list1_l, list2_l;
     Button submit, reserve;
     TextView user_t, occup_t, phone_t, pass_l;
     TextInputEditText user_i, occup_i, phone_i, pass_i;
@@ -57,8 +59,10 @@ public class Profile extends AppCompatActivity {
             seenByOwner();
         else
             seenByOthers();
-
-
+        Log.i("length: ", Integer.toString(TmpArrays.getInstance().getReserveCards().size()));
+        ArrayAdapter adapter1 = new ProfileAdapter(this, 0,
+                TmpArrays.getInstance().getReserveCards());
+        list1.setAdapter(adapter1);
     }
 
     private void seenByOthers() {
@@ -71,6 +75,9 @@ public class Profile extends AppCompatActivity {
         card_submit.setVisibility(View.INVISIBLE);
         reserve.setVisibility(View.INVISIBLE);
         card_reserve.setVisibility(View.INVISIBLE);
+        list2.setVisibility(View.INVISIBLE);
+        list2_l.setVisibility(View.INVISIBLE);
+        list1_l.setText("وقت های خالی");
     }
 
     private void seenByOwner() {
@@ -80,6 +87,12 @@ public class Profile extends AppCompatActivity {
         if (!isDoctor) {
             reserve.setVisibility(View.INVISIBLE);
             card_reserve.setVisibility(View.INVISIBLE);
+            list2.setVisibility(View.INVISIBLE);
+            list2_l.setVisibility(View.INVISIBLE);
+            list1_l.setText("وقت های گرفته شده");
+        } else {
+            list1_l.setText("وقت های خالی");
+            list2_l.setText("وقت های پر");
         }
     }
 
@@ -96,6 +109,10 @@ public class Profile extends AppCompatActivity {
         reserve = findViewById(R.id.prof_button_create_reserve);
         card_reserve = findViewById(R.id.prof_card_reserve);
         card_submit = findViewById(R.id.prof_card_submit);
+        list1 = findViewById(R.id.prof_list1);
+        list2 = findViewById(R.id.prof_list2);
+        list1_l = findViewById(R.id.prof_list1_label);
+        list2_l = findViewById(R.id.prof_list2_label);
     }
 //    public TextWatcher searchTextWatcher() {
 //        return new TextWatcher() {
