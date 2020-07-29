@@ -9,7 +9,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import static com.example.pezeshkam.Activities.MainActivity.RESQUEST_FAILED;
+import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
 
 public class SearchThread extends Thread {
     private String searchField;

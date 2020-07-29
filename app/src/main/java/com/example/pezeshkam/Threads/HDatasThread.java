@@ -9,7 +9,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import static com.example.pezeshkam.Activities.MainActivity.PROFILE_PICTURE_NOT_RECEIVED;
+import static com.example.pezeshkam.Activities.Homepage.PROFILE_PICTURE_NOT_RECEIVED;
 
 public class HDatasThread extends Thread {
     private Handler handler;

@@ -1,9 +1,12 @@
 package com.example.pezeshkam.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -16,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -28,42 +32,70 @@ import com.example.pezeshkam.R;
 import com.example.pezeshkam.Threads.HDatasThread;
 import com.example.pezeshkam.Threads.SearchThread;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-public class MainActivity extends AppCompatActivity {
-    public static final int EMPTY_RESULT = 0;
-    public static final int NON_EMPTY_RESULT = 1;
-    public static final int RESQUEST_FAILED = 2;
-    public static final int PROFILE_PICTURE_FETCHED = 3;
-    public static final int PROFILE_PICTURE_NOT_RECEIVED = 4;
+public class Profile extends AppCompatActivity {
 
+
+    int userID = 3, profID = 3;
+    boolean isDoctor = true;
+    ListView list1, list2;
+    Button submit, reserve;
+    TextView user_t, occup_t, phone_t, pass_l;
+    TextInputEditText user_i, occup_i, phone_i, pass_i;
+    CardView card_submit, card_reserve;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile);
+        Intent intent = getIntent();
+        setContentView(R.layout.activity_profile);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("پروفایل");
+        getComponents();
+        if (userID == profID)
+            seenByOwner();
+        else
+            seenByOthers();
+
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void seenByOthers() {
+        user_i.setVisibility(View.INVISIBLE);
+        occup_i.setVisibility(View.INVISIBLE);
+        phone_i.setVisibility(View.INVISIBLE);
+        pass_i.setVisibility(View.INVISIBLE);
+        pass_l.setVisibility(View.INVISIBLE);
+        submit.setVisibility(View.INVISIBLE);
+        card_submit.setVisibility(View.INVISIBLE);
+        reserve.setVisibility(View.INVISIBLE);
+        card_reserve.setVisibility(View.INVISIBLE);
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void seenByOwner() {
+        user_t.setVisibility(View.INVISIBLE);
+        occup_t.setVisibility(View.INVISIBLE);
+        phone_t.setVisibility(View.INVISIBLE);
+        if (!isDoctor) {
+            reserve.setVisibility(View.INVISIBLE);
+            card_reserve.setVisibility(View.INVISIBLE);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void getComponents() {
+        user_t = findViewById(R.id.prof_user_t);
+        user_i = findViewById(R.id.prof_user_i);
+        occup_t = findViewById(R.id.prof_occup_t);
+        occup_i = findViewById(R.id.prof_occup_i);
+        phone_t = findViewById(R.id.prof_phone_t);
+        phone_i = findViewById(R.id.prof_phone_i);
+        pass_l = findViewById(R.id.prof_pass_l);
+        pass_i = findViewById(R.id.prof_pass_i);
+        submit = findViewById(R.id.prof_button_submit);
+        reserve = findViewById(R.id.prof_button_create_reserve);
+        card_reserve = findViewById(R.id.prof_card_reserve);
+        card_submit = findViewById(R.id.prof_card_submit);
     }
 //    public TextWatcher searchTextWatcher() {
 //        return new TextWatcher() {
