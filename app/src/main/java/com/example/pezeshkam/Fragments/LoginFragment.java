@@ -1,4 +1,4 @@
-package com.example.pezeshkam;
+package com.example.pezeshkam.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import com.example.pezeshkam.R;
 
 public class LoginFragment extends Fragment {
 
