@@ -1,7 +1,8 @@
-package com.example.pezeshkam;
+package com.example.pezeshkam.Activities;
 
 import android.os.Bundle;
 
+import com.example.pezeshkam.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
