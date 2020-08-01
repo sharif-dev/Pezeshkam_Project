@@ -1,13 +1,17 @@
-package com.example.pezeshkam.Activities;
+package com.example.pezeshkam;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import com.example.pezeshkam.R;
+import android.view.View;
+
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,15 +27,6 @@ public class LoginActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory( Intent.CATEGORY_HOME );
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(homeIntent);
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
