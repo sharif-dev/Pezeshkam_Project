@@ -13,16 +13,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 public class LoginFragment extends Fragment {
 
-    EditText emailEditText;
-    EditText passwordEditText;
-    TextView emptyEmailErrorText;
-    TextView emptyPasswordErrorText;
+    private EditText emailEditText;
+    private EditText passwordEditText;
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.login_fragment, container, false);
     }
@@ -37,7 +32,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(LoginFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                        .navigate(R.id.action_login_to_signup);
             }
         });
 
