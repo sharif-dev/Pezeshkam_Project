@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/login_background"
     android:paddingTop="16dp"
-    tools:context=".SignUpFragment">
+    tools:context=".Fragments.SignUpFragment">
 
     <Button
         android:id="@+id/close_btn"
