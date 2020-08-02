@@ -1,12 +1,10 @@
 package com.example.pezeshkam.Activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.CountDownTimer;
@@ -17,7 +15,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,27 +33,24 @@ public class Homepage extends AppCompatActivity {
     public static final int EMPTY_RESULT = 0;
     public static final int NON_EMPTY_RESULT = 1;
     public static final int RESQUEST_FAILED = 2;
-    public static final int USER_ID = 3;
-    public static final int REQUEST_SUCCEED = 4;
     ListView listView;
     CountDownTimer timer;
     ProgressBar bar;
     TextInputEditText input;
     SearchView searchView;
     ImageView profile;
+    Toast toast;
     static Handler handler;
     boolean requestAllowed = false;
     boolean typing = false;
-    String token;
-    int uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-
-        final Intent intent1 = getIntent();
-        token = intent1.getStringExtra("token");
+        final Intent intent = new Intent(this, Profile.class);
+        intent.putExtra("USERID", 4);
+        intent.putExtra("PROFILEID", 6);
 
         listView = findViewById(R.id.list1);
         bar = findViewById(R.id.home_progress);
@@ -68,9 +62,6 @@ public class Homepage extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Profile.class);
-                intent.putExtra("uid", uid);
-                intent.putExtra("pid", Integer.toString(uid));
                 startActivity(intent);
             }
         });
@@ -78,14 +69,6 @@ public class Homepage extends AppCompatActivity {
         homepageHandler();
         getInitDatas();
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory( Intent.CATEGORY_HOME );
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(homeIntent);
     }
 
     public TextWatcher searchTextWatcher() {
@@ -128,9 +111,8 @@ public class Homepage extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
                 String URL = "http://10.0.2.2:8000/all_doctors/";
-                HomepageThread thread = new HomepageThread(handler, cx, URL, token);
+                HomepageThread thread = new HomepageThread(handler, cx, URL);
                 thread.start();
             }
         }.start();
@@ -151,7 +133,7 @@ public class Homepage extends AppCompatActivity {
         typing = false;
         String text = input.getText().toString();
         String URL = "http://10.0.2.2:8000/search_doctor/?search=" + text;
-        HomepageThread doctorsThread = new HomepageThread(handler, this, URL, token);
+        HomepageThread doctorsThread = new HomepageThread(handler, this, URL);
         doctorsThread.start();
     }
 
@@ -173,23 +155,12 @@ public class Homepage extends AppCompatActivity {
             toast.show();
         } else if (msg.what == NON_EMPTY_RESULT) {
             listView.setVisibility(View.VISIBLE);
-            final ArrayList<DoctorCard> doctorCards = (ArrayList<DoctorCard>) msg.obj;
+            ArrayList<DoctorCard> doctorCards = (ArrayList<DoctorCard>) msg.obj;
             ArrayAdapter<DoctorCard> adapter = new HomepageAdapter(this, 0, doctorCards);
             listView.setAdapter(adapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent intent = new Intent(getApplicationContext(), Profile.class);
-                    intent.putExtra("uid", uid);
-                    intent.putExtra("pid", doctorCards.get(i).getPk());
-                    startActivity(intent);
-                }
-            });
         } else if (msg.what == RESQUEST_FAILED) {
             toast.setText("درخواست با خطا مواجه شد");
             toast.show();
-        } else if (msg.what == USER_ID) {
-            uid = (int) msg.obj;
         }
         searchView.setVisibility(View.VISIBLE);
         input.setVisibility(View.VISIBLE);
