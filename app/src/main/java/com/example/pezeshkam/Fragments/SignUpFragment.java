@@ -15,18 +15,15 @@ import com.example.pezeshkam.R;
 
 public class SignUpFragment extends Fragment {
 
-    EditText nameEditText;
-    EditText phoneEditText;
-    EditText emailEditText;
-    EditText passwordEditText;
-    EditText confirmPasswordEditText;
-    Switch isDoctorSwitch;
+    private EditText nameEditText;
+    private EditText phoneEditText;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private EditText confirmPasswordEditText;
+    private Switch isDoctorSwitch;
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.signup_fragment, container, false);
     }
@@ -45,7 +42,7 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(SignUpFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                        .navigate(R.id.action_signup_to_login);
             }
         });
 
