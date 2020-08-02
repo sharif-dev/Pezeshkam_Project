@@ -1,5 +1,6 @@
 package com.example.pezeshkam.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,21 +14,18 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pezeshkam.Adapters.HomepageAdapter;
 import com.example.pezeshkam.Models.DoctorCard;
 import com.example.pezeshkam.R;
-import com.example.pezeshkam.Threads.HDatasThread;
-import com.example.pezeshkam.Threads.SearchThread;
+import com.example.pezeshkam.Threads.HomepageThread;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -35,15 +33,13 @@ public class Homepage extends AppCompatActivity {
     public static final int EMPTY_RESULT = 0;
     public static final int NON_EMPTY_RESULT = 1;
     public static final int RESQUEST_FAILED = 2;
-    public static final int PROFILE_PICTURE_FETCHED = 3;
-    public static final int PROFILE_PICTURE_NOT_RECEIVED = 4;
     ListView listView;
     CountDownTimer timer;
     ProgressBar bar;
-    TextView notFoundOrError;
     TextInputEditText input;
     SearchView searchView;
     ImageView profile;
+    Toast toast;
     static Handler handler;
     boolean requestAllowed = false;
     boolean typing = false;
@@ -56,13 +52,9 @@ public class Homepage extends AppCompatActivity {
         intent.putExtra("USERID", 4);
         intent.putExtra("PROFILEID", 6);
 
-        homepageHandler();
-        ArrayList<DoctorCard> doctorCards = TmpArrays.getInstance().getDoctorCards();
-
         listView = findViewById(R.id.list1);
         bar = findViewById(R.id.home_progress);
         input = findViewById(R.id.home_input);
-        notFoundOrError = findViewById(R.id.not_found);
         searchView = findViewById(R.id.searchicon);
         profile = findViewById(R.id.home_prof);
         Log.i("profile image", profile.toString());
@@ -73,10 +65,10 @@ public class Homepage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        homepageHandler();
         getInitDatas();
 
-        ArrayAdapter<DoctorCard> adapter = new HomepageAdapter(this, 0, doctorCards);
-        listView.setAdapter(adapter);
     }
 
     public TextWatcher searchTextWatcher() {
@@ -93,6 +85,7 @@ public class Homepage extends AppCompatActivity {
                     @Override
                     public void onTick(long l) {
                     }
+
                     @Override
                     public void onFinish() {
                         typingFinished();
@@ -100,6 +93,7 @@ public class Homepage extends AppCompatActivity {
                 };
                 timer.start();
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -108,15 +102,17 @@ public class Homepage extends AppCompatActivity {
     }
 
     public void getInitDatas() {
-        input.setVisibility(View.INVISIBLE);
-        searchView.setVisibility(View.INVISIBLE);
         listView.setVisibility(View.INVISIBLE);
-        timer = new CountDownTimer(2000, 1000) {
+        final Context cx = this;
+        timer = new CountDownTimer(500, 500) {
             @Override
-            public void onTick(long l) {}
+            public void onTick(long l) {
+            }
+
             @Override
             public void onFinish() {
-                HDatasThread thread = new HDatasThread(2, handler);
+                String URL = "http://10.0.2.2:8000/all_doctors/";
+                HomepageThread thread = new HomepageThread(handler, cx, URL);
                 thread.start();
             }
         }.start();
@@ -136,7 +132,8 @@ public class Homepage extends AppCompatActivity {
         requestAllowed = true;
         typing = false;
         String text = input.getText().toString();
-        SearchThread doctorsThread = new SearchThread(text, handler);
+        String URL = "http://10.0.2.2:8000/search_doctor/?search=" + text;
+        HomepageThread doctorsThread = new HomepageThread(handler, this, URL);
         doctorsThread.start();
     }
 
@@ -147,30 +144,27 @@ public class Homepage extends AppCompatActivity {
             typing = true;
             listView.setVisibility(View.INVISIBLE);
             bar.setVisibility(View.VISIBLE);
-            notFoundOrError.setVisibility(View.INVISIBLE);
         }
     }
 
     public void homepageMessage(@NonNull Message msg) {
+        Toast toast = Toast.makeText(this, "message", Toast.LENGTH_LONG);
         bar.setVisibility(View.INVISIBLE);
         if (msg.what == EMPTY_RESULT) {
-            notFoundOrError.setVisibility(View.VISIBLE);
-            notFoundOrError.setText("نتیجه‌ای یافت نشد :((");
+            toast.setText("نتیجه ای یافت نشد");
+            toast.show();
         } else if (msg.what == NON_EMPTY_RESULT) {
             listView.setVisibility(View.VISIBLE);
+            ArrayList<DoctorCard> doctorCards = (ArrayList<DoctorCard>) msg.obj;
+            ArrayAdapter<DoctorCard> adapter = new HomepageAdapter(this, 0, doctorCards);
+            listView.setAdapter(adapter);
         } else if (msg.what == RESQUEST_FAILED) {
-            notFoundOrError.setText("درخواست با خطا مواجه شد :((");
-            notFoundOrError.setVisibility(View.VISIBLE);
-        } else {
-            if (msg.what == PROFILE_PICTURE_NOT_RECEIVED) {
-                notFoundOrError.setText("عدم ارتباط با سرور :((");
-                notFoundOrError.setVisibility(View.VISIBLE);
-            } else if (msg.what == PROFILE_PICTURE_FETCHED) {
-                listView.setVisibility(View.VISIBLE);
-            }
-            searchView.setVisibility(View.VISIBLE);
-            input.setVisibility(View.VISIBLE);
+            toast.setText("درخواست با خطا مواجه شد");
+            toast.show();
         }
+        searchView.setVisibility(View.VISIBLE);
+        input.setVisibility(View.VISIBLE);
+
     }
 }
 

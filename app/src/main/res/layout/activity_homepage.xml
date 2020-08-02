@@ -12,52 +12,13 @@
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="68dp"
-        android:background="?attr/colorPrimary"
+        android:background="@color/toolbar"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/home_prof"
-        android:layout_width="45dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        app:layout_constraintVertical_bias="0.59"
-        app:srcCompat="@drawable/user" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/home_input"
-        android:layout_width="260dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:background="@color/cardview_light_background"
-        android:gravity="end"
-        android:hint="جستجو کنید"
-        android:padding="12dp"
-        android:textAlignment="viewEnd"
-        android:textColor="#1E1B18"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintEnd_toStartOf="@+id/home_prof"
-        app:layout_constraintHorizontal_bias="0.26"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48" />
-
-    <SearchView
-        android:id="@+id/searchicon"
-        android:layout_width="33dp"
-        android:layout_height="35dp"
-        app:layout_constraintBottom_toBottomOf="@+id/home_input"
-        app:layout_constraintStart_toStartOf="@+id/home_input"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.727" />
 
     <ListView
         android:layout_width="409dp"
@@ -66,6 +27,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/home_cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+        app:layout_constraintHorizontal_bias="0.942"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/home_prof"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/user" />
+    </androidx.cardview.widget.CardView>
 
     <ProgressBar
         android:id="@+id/home_progress"
@@ -74,16 +52,43 @@
         app:layout_constraintBottom_toBottomOf="@+id/list1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/list1"
-        app:layout_constraintTop_toTopOf="@+id/home_input" />
+        app:layout_constraintTop_toTopOf="@+id/toolbar2" />
 
-    <TextView
-        android:id="@+id/not_found"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/home_cardview2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="نتیجه‌ای یافت نشد :("
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/list1"
-        app:layout_constraintStart_toStartOf="@+id/list1"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="30dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/home_input"
+            android:layout_width="260dp"
+            android:layout_height="45dp"
+            android:background="@color/cardview_light_background"
+            android:gravity="end"
+            android:hint="جستجو کنید"
+            android:padding="12dp"
+            android:textAlignment="viewEnd"
+            android:textColor="#1E1B18"
+            app:layout_constraintBottom_toBottomOf="@+id/home_cardview2"
+            app:layout_constraintEnd_toEndOf="@+id/home_cardview2" />
+
+        <SearchView
+            android:id="@+id/searchicon"
+            android:layout_width="33dp"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toBottomOf="@+id/home_input"
+            app:layout_constraintEnd_toEndOf="@+id/home_cardview2"
+            app:layout_constraintStart_toStartOf="@+id/home_cardview2"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="5dp"/>
+    </androidx.cardview.widget.CardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,39 +3,21 @@ package com.example.pezeshkam.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.example.pezeshkam.Adapters.HomepageAdapter;
 import com.example.pezeshkam.Adapters.ProfileAdapter;
-import com.example.pezeshkam.Models.DoctorCard;
 import com.example.pezeshkam.R;
-import com.example.pezeshkam.Threads.HDatasThread;
-import com.example.pezeshkam.Threads.SearchThread;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.ArrayList;
 public class Profile extends AppCompatActivity {
 
 
@@ -44,8 +26,8 @@ public class Profile extends AppCompatActivity {
     ListView list1, list2;
     TextView list1_l, list2_l;
     Button submit, reserve;
-    TextView user_t, occup_t, phone_t, pass_l;
-    TextInputEditText user_i, occup_i, phone_i, pass_i;
+    TextView user_t, occup_t, phone_t, pass_l, email_t;
+    TextInputEditText user_i, occup_i, phone_i, pass_i, email_i;
     CardView card_submit, card_reserve;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +51,7 @@ public class Profile extends AppCompatActivity {
         user_i.setVisibility(View.INVISIBLE);
         occup_i.setVisibility(View.INVISIBLE);
         phone_i.setVisibility(View.INVISIBLE);
+        email_i.setVisibility(View.INVISIBLE);
         pass_i.setVisibility(View.INVISIBLE);
         pass_l.setVisibility(View.INVISIBLE);
         submit.setVisibility(View.INVISIBLE);
@@ -84,6 +67,7 @@ public class Profile extends AppCompatActivity {
         user_t.setVisibility(View.INVISIBLE);
         occup_t.setVisibility(View.INVISIBLE);
         phone_t.setVisibility(View.INVISIBLE);
+        email_t.setVisibility(View.INVISIBLE);
         if (!isDoctor) {
             reserve.setVisibility(View.INVISIBLE);
             card_reserve.setVisibility(View.INVISIBLE);
@@ -102,6 +86,8 @@ public class Profile extends AppCompatActivity {
         occup_t = findViewById(R.id.prof_occup_t);
         occup_i = findViewById(R.id.prof_occup_i);
         phone_t = findViewById(R.id.prof_phone_t);
+        email_i = findViewById(R.id.prof_email_i);
+        email_t = findViewById(R.id.prof_email_t);
         phone_i = findViewById(R.id.prof_phone_i);
         pass_l = findViewById(R.id.prof_pass_l);
         pass_i = findViewById(R.id.prof_pass_i);
