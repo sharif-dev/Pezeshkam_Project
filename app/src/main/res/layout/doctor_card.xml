@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="نا مشخص"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"/>
         <TextView
@@ -36,14 +36,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="نامشخص"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"/>
         <TextView
             android:id="@+id/doctor_occupation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:textStyle="bold"
             android:text="نامشخص" />
     </LinearLayout>
