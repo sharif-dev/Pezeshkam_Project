@@ -4,9 +4,10 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="email_hint">Email</string>
+    <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="confirm_password_hint">Confirm Password</string>
+    <string name="email_hint">Email</string>
     <string name="name_hint">Name</string>
     <string name="phone_hint">Phone Number</string>
     <string name="login">ورود</string>
@@ -18,7 +19,8 @@
     <string name="empty_confirm_password_error">* لطفا رمز صحیح را دوباره وارد کنید</string>
     <string name="empty_name_error">* لطفا نام خود را وارد کنید</string>
     <string name="empty_phone_error">* لطفا شماره همراه خود را وارد کنید</string>
+    <string name="unsuccessful_login_error">خطا در ورود</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="login_api_url">http://10.0.2.2:8000/api/rest-auth/login/</string>
+    <string name="signup_api_url">http://10.0.2.2:8000/api/rest-auth/registration/</string>
 </resources>

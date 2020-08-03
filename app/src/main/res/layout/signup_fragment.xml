@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/login_background"
-    android:paddingTop="16dp"
-    tools:context=".Fragments.SignUpFragment">
+    android:paddingTop="12dp"
+    tools:context=".Activities.LoginActivity">
 
     <Button
         android:id="@+id/close_btn"
@@ -40,11 +40,51 @@
         app:layout_constraintTop_toBottomOf="@id/close_btn">
 
         <EditText
-            android:id="@+id/name_text"
+            android:id="@+id/signup_username_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_user"
             android:drawableLeft="@drawable/ic_user"
+            android:drawablePadding="4dp"
+            android:hint="@string/username_hint"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/signup_email_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_email"
+            android:drawableLeft="@drawable/ic_email"
+            android:drawablePadding="4dp"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/signup_password_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawableLeft="@drawable/ic_lock"
+            android:drawablePadding="4dp"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/confirm_password_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawableLeft="@drawable/ic_lock"
+            android:drawablePadding="4dp"
+            android:hint="@string/confirm_password_hint"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_name"
+            android:drawableLeft="@drawable/ic_name"
             android:drawablePadding="4dp"
             android:hint="@string/name_hint"
             android:inputType="textPersonName" />
@@ -59,46 +99,17 @@
             android:hint="@string/phone_hint"
             android:inputType="phone" />
 
-        <EditText
-            android:id="@+id/email_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_email"
-            android:drawableLeft="@drawable/ic_email"
-            android:drawablePadding="4dp"
-            android:hint="@string/email_hint"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/password_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawableLeft="@drawable/ic_lock"
-            android:drawablePadding="4dp"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/confirm_password_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawableLeft="@drawable/ic_lock"
-            android:drawablePadding="4dp"
-            android:hint="@string/confirm_password_hint"
-            android:inputType="textPassword" />
-
         <Button
             android:id="@+id/create_account_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/signup_btn_bg"
             android:text="@string/create_account"
             android:textSize="20sp" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

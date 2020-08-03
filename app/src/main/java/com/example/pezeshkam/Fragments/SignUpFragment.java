@@ -15,11 +15,12 @@ import com.example.pezeshkam.R;
 
 public class SignUpFragment extends Fragment {
 
-    private EditText nameEditText;
-    private EditText phoneEditText;
+    private EditText userEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
+    private EditText nameEditText;
+    private EditText phoneEditText;
     private Switch isDoctorSwitch;
 
     @Override
@@ -31,12 +32,13 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        nameEditText = view.findViewById(R.id.name_text);
-        phoneEditText = view.findViewById(R.id.phone_text);
-        emailEditText = view.findViewById(R.id.email_text);
-        passwordEditText = view.findViewById(R.id.password_text);
+        userEditText = view.findViewById(R.id.signup_username_text);
+        emailEditText = view.findViewById(R.id.signup_email_text);
+        passwordEditText = view.findViewById(R.id.signup_password_text);
         confirmPasswordEditText = view.findViewById(R.id.confirm_password_text);
         isDoctorSwitch = view.findViewById(R.id.doctor_switch);
+        phoneEditText = view.findViewById(R.id.phone_text);
+        nameEditText = view.findViewById(R.id.name_text);
 
         view.findViewById(R.id.close_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,12 +52,8 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 boolean isInputCorrect = true;
-                if (nameEditText.getText().toString().isEmpty()) {
-                    nameEditText.setError(getString(R.string.empty_name_error));
-                    isInputCorrect = false;
-                }
-                if (phoneEditText.getText().toString().isEmpty()) {
-                    phoneEditText.setError(getString(R.string.empty_phone_error));
+                if (userEditText.getText().toString().isEmpty()) {
+                    userEditText.setError(getString(R.string.empty_name_error));
                     isInputCorrect = false;
                 }
                 if (emailEditText.getText().toString().isEmpty()) {
