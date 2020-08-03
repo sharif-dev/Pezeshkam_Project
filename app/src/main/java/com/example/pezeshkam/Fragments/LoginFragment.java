@@ -103,8 +103,6 @@ public class LoginFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(getActivity(), Homepage.class);
-                        intent.putExtra("username", username);
-                        intent.putExtra("password", password);
                         try {
                             intent.putExtra("token", response.get("key").toString());
                         } catch (JSONException e) {

@@ -39,7 +39,6 @@ public class Homepage extends AppCompatActivity {
     TextInputEditText input;
     SearchView searchView;
     ImageView profile;
-    Toast toast;
     static Handler handler;
     boolean requestAllowed = false;
     boolean typing = false;
