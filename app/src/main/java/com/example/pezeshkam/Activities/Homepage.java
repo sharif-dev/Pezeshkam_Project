@@ -43,14 +43,19 @@ public class Homepage extends AppCompatActivity {
     static Handler handler;
     boolean requestAllowed = false;
     boolean typing = false;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
         final Intent intent = new Intent(this, Profile.class);
         intent.putExtra("USERID", 4);
         intent.putExtra("PROFILEID", 6);
+
+        final Intent intent1 = getIntent();
+        token = intent1.getStringExtra("token");
 
         listView = findViewById(R.id.list1);
         bar = findViewById(R.id.home_progress);
@@ -111,8 +116,9 @@ public class Homepage extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+
                 String URL = "http://10.0.2.2:8000/all_doctors/";
-                HomepageThread thread = new HomepageThread(handler, cx, URL);
+                HomepageThread thread = new HomepageThread(handler, cx, URL, token);
                 thread.start();
             }
         }.start();
@@ -133,7 +139,7 @@ public class Homepage extends AppCompatActivity {
         typing = false;
         String text = input.getText().toString();
         String URL = "http://10.0.2.2:8000/search_doctor/?search=" + text;
-        HomepageThread doctorsThread = new HomepageThread(handler, this, URL);
+        HomepageThread doctorsThread = new HomepageThread(handler, this, URL, token);
         doctorsThread.start();
     }
 
