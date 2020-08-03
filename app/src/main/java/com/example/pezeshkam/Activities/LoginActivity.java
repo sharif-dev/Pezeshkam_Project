@@ -1,5 +1,6 @@
 package com.example.pezeshkam.Activities;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import com.example.pezeshkam.R;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 public class LoginActivity extends AppCompatActivity {
 
