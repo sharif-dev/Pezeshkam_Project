@@ -3,6 +3,7 @@ package com.example.pezeshkam.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,11 @@ public class LoginFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), Homepage.class);
                         intent.putExtra("username", username);
                         intent.putExtra("password", password);
+                        try {
+                            intent.putExtra("token", response.get("key").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         startActivity(intent);
                     }
                 }, new Response.ErrorListener() {

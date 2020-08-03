@@ -40,11 +40,13 @@ public class HomepageThread extends Thread {
     private Handler handler;
     Context context;
     String URL;
+    String token;
 
-    public HomepageThread(Handler handler, Context context, String URL) {
+    public HomepageThread(Handler handler, Context context, String URL, String token) {
         this.handler = handler;
         this.context = context;
         this.URL = URL;
+        this.token = token;
     }
 
     @Override
@@ -74,7 +76,7 @@ public class HomepageThread extends Thread {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
-                params.put("Authorization", "Token ed2feddddce2577bb3cd9d4686b01fe0e8c080d1");
+                params.put("Authorization", "Token " + token);
                 params.put("Content-type", "application/json");
                 Log.i("volley header", params.toString());
                 return params;

@@ -13,12 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".Activities.Homepage"
-            android:parentActivityName=".Activities.LoginActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.LoginActivity" />
+        <activity android:name=".Activities.Homepage"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
         <activity
             android:name=".Activities.Profile"
@@ -28,7 +25,7 @@
                 android:value=".Activities.Homepage" />
         </activity>
         <activity
-            android:name=".Activities.Homepage"
+            android:name=".Activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="DuplicateActivity">
