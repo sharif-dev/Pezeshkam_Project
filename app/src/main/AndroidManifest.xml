@@ -30,7 +30,7 @@
                 android:value=".Activities.Homepage" />
         </activity>
         <activity
-            android:name=".Activities.Profile"
+            android:name=".Activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="DuplicateActivity">
