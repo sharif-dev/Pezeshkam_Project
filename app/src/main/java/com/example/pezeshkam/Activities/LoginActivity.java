@@ -1,20 +1,12 @@
 package com.example.pezeshkam.Activities;
 
-import android.opengl.Visibility;
 import android.os.Bundle;
-
-import com.example.pezeshkam.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
-
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pezeshkam.R;
 
 public class LoginActivity extends AppCompatActivity {
 

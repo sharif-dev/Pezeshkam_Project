@@ -18,6 +18,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -51,11 +52,15 @@ public class LoginFragment extends Fragment {
         requestQueue = Volley.newRequestQueue(getActivity());
         handler = new Handler();
 
+        usernameEditText.setText(getArguments() != null ? getArguments().getString("username") : null);
+
         view.findViewById(R.id.sing_up_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("username", usernameEditText.getText().toString());
                 NavHostFragment.findNavController(LoginFragment.this)
-                        .navigate(R.id.action_login_to_signup);
+                        .navigate(R.id.action_login_to_signup, bundle);
             }
         });
 
@@ -66,7 +71,7 @@ public class LoginFragment extends Fragment {
                 final String username = usernameEditText.getText().toString();
                 final String password = passwordEditText.getText().toString();
                 if (username.isEmpty()) {
-                    usernameEditText.setError(getString(R.string.empty_email_error));
+                    usernameEditText.setError(getString(R.string.empty_username_error));
                     isInputCorrect = false;
                 }
                 if (password.isEmpty()) {
@@ -100,6 +105,7 @@ public class LoginFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+//                        System.out.println("RRR" + response);
                         progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(getActivity(), Homepage.class);
                         intent.putExtra("username", username);
@@ -109,8 +115,13 @@ public class LoginFragment extends Fragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+//                        System.out.println("EEE" + error);
                         progressBar.setVisibility(View.INVISIBLE);
-                        showToast(getString(R.string.unsuccessful_login_error));
+                        if (error instanceof TimeoutError) {
+                            showToast(getString(R.string.server_down_error));
+                        } else {
+                            showToast(getString(R.string.unsuccessful_login_error));
+                        }
                     }
                 }) {
             @Override

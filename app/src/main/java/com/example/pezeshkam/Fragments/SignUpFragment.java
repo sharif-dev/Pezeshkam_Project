@@ -1,27 +1,47 @@
 package com.example.pezeshkam.Fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.pezeshkam.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpFragment extends Fragment {
 
-    private EditText userEditText;
+    private EditText usernameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
     private EditText nameEditText;
     private EditText phoneEditText;
     private Switch isDoctorSwitch;
+    private ProgressBar progressBar;
+    private RequestQueue requestQueue;
+    private Handler handler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,13 +52,18 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        userEditText = view.findViewById(R.id.signup_username_text);
+        usernameEditText = view.findViewById(R.id.signup_username_text);
         emailEditText = view.findViewById(R.id.signup_email_text);
         passwordEditText = view.findViewById(R.id.signup_password_text);
         confirmPasswordEditText = view.findViewById(R.id.confirm_password_text);
         isDoctorSwitch = view.findViewById(R.id.doctor_switch);
-        phoneEditText = view.findViewById(R.id.phone_text);
         nameEditText = view.findViewById(R.id.name_text);
+        phoneEditText = view.findViewById(R.id.phone_text);
+        progressBar = view.findViewById(R.id.signup_progress_bar);
+        requestQueue = Volley.newRequestQueue(getActivity());
+        handler = new Handler();
+
+        usernameEditText.setText(getArguments().getString("username"));
 
         view.findViewById(R.id.close_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,27 +77,85 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 boolean isInputCorrect = true;
-                if (userEditText.getText().toString().isEmpty()) {
-                    userEditText.setError(getString(R.string.empty_name_error));
+                final String username = usernameEditText.getText().toString();
+                final String email = emailEditText.getText().toString();
+                final String password = passwordEditText.getText().toString();
+                final String confirmPassword = confirmPasswordEditText.getText().toString();
+                if (username.isEmpty()) {
+                    usernameEditText.setError(getString(R.string.empty_username_error));
                     isInputCorrect = false;
                 }
-                if (emailEditText.getText().toString().isEmpty()) {
-                    emailEditText.setError(getString(R.string.empty_email_error));
-                    isInputCorrect = false;
-                }
-                if (passwordEditText.getText().toString().isEmpty()) {
+//                if (email.isEmpty()) {
+//                    emailEditText.setError(getString(R.string.empty_email_error));
+//                    isInputCorrect = false;
+//                }
+                if (password.isEmpty()) {
                     passwordEditText.setError(getString(R.string.empty_password_error));
                     isInputCorrect = false;
                 }
-                if (confirmPasswordEditText.getText().toString().isEmpty()
-                        | !confirmPasswordEditText.getText().toString().equals(emailEditText.getText().toString())) {
+                if (confirmPassword.isEmpty() | !confirmPassword.equals(password)) {
                     confirmPasswordEditText.setError(getString(R.string.empty_confirm_password_error));
                     isInputCorrect = false;
                 }
                 if (isInputCorrect) {
-                    // TODO: 7/31/2020 signup function here
+                    progressBar.setVisibility(View.VISIBLE);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendSignupRequest(username, email, password, confirmPassword);
+                        }
+                    });
                 }
             }
         });
+    }
+
+    private void sendSignupRequest(final String username, String email, final String password, String confirmPassword) {
+        final JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", username);
+            jsonObject.put("email", email);
+            jsonObject.put("password1", password);
+            jsonObject.put("password2", confirmPassword);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                getString(R.string.signup_api_url), jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                        System.out.println("RRR" + response);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("username", username);
+                        NavHostFragment.findNavController(SignUpFragment.this)
+                                .navigate(R.id.action_signup_to_login, bundle);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        System.out.println("EEE" + error);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        if (error instanceof TimeoutError) {
+                            showToast(getString(R.string.server_down_error));
+                        } else {
+                            showToast(getString(R.string.unsuccessful_signup_error));
+                        }
+                    }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    void showToast(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 }

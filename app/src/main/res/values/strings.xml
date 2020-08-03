@@ -12,14 +12,17 @@
     <string name="phone_hint">Phone Number</string>
     <string name="login">ورود</string>
     <string name="signup">عضویت</string>
-    <string name="create_account">ساخت حساب کاربری</string>
+    <string name="create_account">ایجاد حساب کاربری</string>
     <string name="isDoctor">من پزشک هستم</string>
+    <string name="empty_username_error">* لطفا نام کاربری را وارد کنید</string>
     <string name="empty_email_error">* لطفا ایمیل را وارد کنید</string>
     <string name="empty_password_error">* لطفا رمز را وارد کنید</string>
     <string name="empty_confirm_password_error">* لطفا رمز صحیح را دوباره وارد کنید</string>
     <string name="empty_name_error">* لطفا نام خود را وارد کنید</string>
     <string name="empty_phone_error">* لطفا شماره همراه خود را وارد کنید</string>
     <string name="unsuccessful_login_error">خطا در ورود</string>
+    <string name="unsuccessful_signup_error">خطا در ایجاد حساب کاربری</string>
+    <string name="server_down_error">خطا در سرور</string>
 
     <string name="login_api_url">http://10.0.2.2:8000/api/rest-auth/login/</string>
     <string name="signup_api_url">http://10.0.2.2:8000/api/rest-auth/registration/</string>
