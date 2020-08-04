@@ -77,18 +77,18 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 boolean isInputCorrect = true;
-                final String username = usernameEditText.getText().toString();
-                final String email = emailEditText.getText().toString();
-                final String password = passwordEditText.getText().toString();
-                final String confirmPassword = confirmPasswordEditText.getText().toString();
+                final String username = usernameEditText.getText().toString().trim();
+                final String email = emailEditText.getText().toString().trim();
+                final String password = passwordEditText.getText().toString().trim();
+                final String confirmPassword = confirmPasswordEditText.getText().toString().trim();
                 if (username.isEmpty()) {
                     usernameEditText.setError(getString(R.string.empty_username_error));
                     isInputCorrect = false;
                 }
-//                if (email.isEmpty()) {
-//                    emailEditText.setError(getString(R.string.empty_email_error));
-//                    isInputCorrect = false;
-//                }
+                if (email.isEmpty()) {
+                    emailEditText.setError(getString(R.string.empty_email_error));
+                    isInputCorrect = false;
+                }
                 if (password.isEmpty()) {
                     passwordEditText.setError(getString(R.string.empty_password_error));
                     isInputCorrect = false;
@@ -125,18 +125,23 @@ public class SignUpFragment extends Fragment {
                 getString(R.string.signup_api_url), jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-//                        System.out.println("RRR" + response);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("username", username);
-                        NavHostFragment.findNavController(SignUpFragment.this)
-                                .navigate(R.id.action_signup_to_login, bundle);
+                    public void onResponse(final JSONObject response) {
+//                        System.out.println("R_signup" + response);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    sendSetProfileRequest(response.get("key").toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        System.out.println("EEE" + error);
+//                        System.out.println("E_signup" + error);
                         progressBar.setVisibility(View.INVISIBLE);
                         if (error instanceof TimeoutError) {
                             showToast(getString(R.string.server_down_error));
@@ -153,6 +158,57 @@ public class SignUpFragment extends Fragment {
             }
         };
         requestQueue.add(jsonObjectRequest);
+    }
+
+    private void sendSetProfileRequest(final String key) {
+        final String username = usernameEditText.getText().toString().trim();
+        String name = nameEditText.getText().toString().trim();
+        String phone = phoneEditText.getText().toString().trim();
+        final JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", username);
+            jsonObject.put("name", name);
+            jsonObject.put("phone_number", phone);
+            jsonObject.put("is_doctor", (isDoctorSwitch.isChecked() ? 1 : 0));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                getString(R.string.setprofile_api_url), jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        onCreateAccountSuccessful(username);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError) {
+                            showToast(getString(R.string.server_down_error));
+                        } else {
+                            onCreateAccountSuccessful(username);
+                        }
+                    }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", "Token " + key);
+                return params;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void onCreateAccountSuccessful(String username) {
+        progressBar.setVisibility(View.INVISIBLE);
+        showToast(getString(R.string.successful_signup_msg));
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        NavHostFragment.findNavController(SignUpFragment.this)
+                .navigate(R.id.action_signup_to_login, bundle);
     }
 
     void showToast(String msg) {
