@@ -27,6 +27,10 @@ public class ReserveCard {
         this.isCatched = patientID != null;
     }
 
+    public void toggleCached() {
+        isCatched = !isCatched;
+    }
+
     public String getOccupation() {
         return occupation;
     }

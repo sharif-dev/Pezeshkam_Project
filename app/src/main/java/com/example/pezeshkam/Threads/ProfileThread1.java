@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -52,14 +54,15 @@ public class ProfileThread1 extends Thread {
             public void onResponse(JSONArray response) {
                 msg.what = NON_EMPTY_RESULT;
                 try {
+                    Log.i("patient", response.toString());
                     JSONObject object = response.getJSONObject(0);
                     JSONArray visits = response.getJSONArray(1);
                     String phone = object.getString("phone_number");
                     String username = object.getString("username");
                     String occupation = object.getString("field");
                     String avatar = "http://10.0.2.2:8000" + object.getString("avatar");
-//                    String email = object.getString("email");
-                    Profile profile = new Profile(username, phone, occupation, "",
+                    String email = object.getString("email");
+                    Profile profile = new Profile(username, phone, occupation, email,
                             avatar, true,createCards(visits));
                     msg.obj = profile;
                     handler.sendMessage(msg);
@@ -94,10 +97,14 @@ public class ProfileThread1 extends Thread {
             String end_hour = visit.getString("end_hour");
             String end_minute = visit.getString("end_minute");
             String cardId = visit.getString("id");
-            JSONObject patient = visit.getJSONObject("patient");
-            String patientID = patient.getString("id");
-            String patientName = patient.getString("username");
-            String patientMobile = patient.getString("phone_number");
+            String  patientID = null, patientName = null, patientMobile = null;
+            if (!visit.get("patient").toString().equals("null")) {
+                JSONObject patient = visit.getJSONObject("patient");
+                visit.getJSONObject("patient");
+                patientID = patient.getString("id");
+                patientName = patient.getString("username");
+                patientMobile = patient.getString("phone_number");
+            }
             JSONObject doctor = visit.getJSONObject("doctor");
             String doctorID = doctor.getString("id");
             String username = doctor.getString("username");

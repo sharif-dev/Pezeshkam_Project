@@ -53,10 +53,6 @@ public class Homepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        final Intent intent = new Intent(this, Profile.class);
-        intent.putExtra("USERID", 4);
-        intent.putExtra("PROFILEID", 6);
-
         final Intent intent1 = getIntent();
         token = intent1.getStringExtra("token");
 
@@ -70,6 +66,9 @@ public class Homepage extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                intent.putExtra("uid", uid);
+                intent.putExtra("pid", Integer.toString(uid));
                 startActivity(intent);
             }
         });
