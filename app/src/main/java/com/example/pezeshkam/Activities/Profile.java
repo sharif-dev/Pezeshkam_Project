@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.pezeshkam.Adapters.ProfileAdapter;
@@ -20,24 +22,31 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class Profile extends AppCompatActivity {
 
-
-    int userID = 3, profID = 3;
+    Integer uID, pID;
     boolean isDoctor = false;
+
     ListView list1, list2;
     TextView list1_l, list2_l;
     Button submit, reserve;
     TextView user_t, occup_t, phone_t, pass_l, email_t;
     TextInputEditText user_i, occup_i, phone_i, pass_i, email_i;
     CardView card_submit, card_reserve;
+    ProgressBar progressBar;
+    ScrollView scrollView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        uID = bundle.getInt("uid");
+        pID = bundle.getInt("pid");
         setContentView(R.layout.activity_profile);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("پروفایل");
         getComponents();
-        if (userID == profID)
+        scrollView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        if (uID.equals(pID))
             seenByOwner();
         else
             seenByOthers();
@@ -81,6 +90,8 @@ public class Profile extends AppCompatActivity {
     }
 
     private void getComponents() {
+        scrollView = findViewById(R.id.prof_scroll);
+        progressBar = findViewById(R.id.prof_progressbar);
         user_t = findViewById(R.id.prof_user_t);
         user_i = findViewById(R.id.prof_user_i);
         occup_t = findViewById(R.id.prof_occup_t);

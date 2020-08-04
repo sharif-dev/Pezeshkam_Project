@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,6 +34,8 @@ public class Homepage extends AppCompatActivity {
     public static final int EMPTY_RESULT = 0;
     public static final int NON_EMPTY_RESULT = 1;
     public static final int RESQUEST_FAILED = 2;
+    public static final int USER_ID = 3;
+
     ListView listView;
     CountDownTimer timer;
     ProgressBar bar;
@@ -43,6 +46,7 @@ public class Homepage extends AppCompatActivity {
     boolean requestAllowed = false;
     boolean typing = false;
     String token;
+    int uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,12 +164,23 @@ public class Homepage extends AppCompatActivity {
             toast.show();
         } else if (msg.what == NON_EMPTY_RESULT) {
             listView.setVisibility(View.VISIBLE);
-            ArrayList<DoctorCard> doctorCards = (ArrayList<DoctorCard>) msg.obj;
+            final ArrayList<DoctorCard> doctorCards = (ArrayList<DoctorCard>) msg.obj;
             ArrayAdapter<DoctorCard> adapter = new HomepageAdapter(this, 0, doctorCards);
             listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(getApplicationContext(), Profile.class);
+                    intent.putExtra("uid", uid);
+                    intent.putExtra("pid", doctorCards.get(i).getPk());
+                    startActivity(intent);
+                }
+            });
         } else if (msg.what == RESQUEST_FAILED) {
             toast.setText("درخواست با خطا مواجه شد");
             toast.show();
+        } else if (msg.what == USER_ID) {
+            uid = (int) msg.obj;
         }
         searchView.setVisibility(View.VISIBLE);
         input.setVisibility(View.VISIBLE);

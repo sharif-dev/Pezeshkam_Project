@@ -1,6 +1,7 @@
 package com.example.pezeshkam.Threads;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -35,6 +36,7 @@ import java.util.Map;
 import static com.example.pezeshkam.Activities.Homepage.EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.NON_EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
+import static com.example.pezeshkam.Activities.Homepage.USER_ID;
 
 public class HomepageThread extends Thread {
     private Handler handler;
@@ -52,7 +54,33 @@ public class HomepageThread extends Thread {
     @Override
     public void run() {
         super.run();
+        final Message msg = new Message();
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
+        String getUID = "http://10.0.2.2:8000/get_id/";
+        JsonObjectRequest requestID = new JsonObjectRequest(Request.Method.GET, getUID, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                msg.what = USER_ID;
+                try {
+                    msg.obj = Integer.toString((Integer) response.get("pk"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("error khan", error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", "Token " + token);
+                Log.i("volley header", params.toString());
+                return params;
+            }
+        };
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, this.URL, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -68,7 +96,6 @@ public class HomepageThread extends Thread {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("error is", error.toString());
-                Message msg = new Message();
                 msg.what = RESQUEST_FAILED;
                 handler.sendMessage(msg);
             }
@@ -82,6 +109,7 @@ public class HomepageThread extends Thread {
                 return params;
             }
         };
+        requestQueue.add(requestID);
         requestQueue.add(request);
 
     }
@@ -93,8 +121,9 @@ public class HomepageThread extends Thread {
             String username = (String) object.get("username");
             String occupation = (String) object.get("field");
             String phone = (String) object.get("phone_number");
-//            String image = (String) object.get("image");
-            DoctorCard doctorCard = new DoctorCard(username, phone, "", occupation);
+            String profid =  Integer.toString((Integer) object.get("pk"));
+            String image = (String) object.get("avatar");
+            DoctorCard doctorCard = new DoctorCard(username, phone, image, occupation, profid);
             doctors.add(doctorCard);
         }
         Message message = new Message();
