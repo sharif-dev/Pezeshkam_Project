@@ -59,11 +59,14 @@ public class ProfileThread1 extends Thread {
                     JSONArray visits = response.getJSONArray(1);
                     String phone = object.getString("phone_number");
                     String username = object.getString("username");
-                    String occupation = object.getString("field");
+                    String occupation = "";
+                    boolean isDoctor = object.getBoolean("is_doctor");
+                    if (object.has("field"))
+                        occupation = object.getString("field");
                     String avatar = "http://10.0.2.2:8000" + object.getString("avatar");
                     String email = object.getString("email");
                     Profile profile = new Profile(username, phone, occupation, email,
-                            avatar, true,createCards(visits));
+                            avatar, isDoctor,createCards(visits));
                     msg.obj = profile;
                     handler.sendMessage(msg);
                 } catch (Exception e) {

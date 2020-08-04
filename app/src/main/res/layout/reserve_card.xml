@@ -3,13 +3,16 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
     android:layoutDirection="rtl"
+    android:background="@color/doctor_card"
     android:padding="15dp">
 
     <TextView
         android:id="@+id/reserve_card_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="نام دکتر: علیرضا دیزجی"/>
+        android:text="نام دکتر: علیرضا دیزجی"
+        android:textSize="16dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/reserve_card_occupation"
@@ -17,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/reserve_card_username"
         android:layout_marginTop="11dp"
-        android:text="شغل: دندانپزشکی" />
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/reserve_card_date"
@@ -25,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/reserve_card_occupation"
         android:layout_marginTop="11dp"
-        android:text="تاریخ رزرو: ۱۳۹۸/۱۲/۲۶ ۲۳:۵۵" />
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/reserve_card_patient_name"
@@ -33,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/reserve_card_occupation"
         android:layout_marginTop="46dp"
-        android:text="تاریخ رزرو: ۱۳۹۸/۱۲/۲۶ ۲۳:۵۵" />
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/reserve_card_patient_mobile"
@@ -41,6 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/reserve_card_occupation"
         android:layout_marginTop="81dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
         android:text="تاریخ رزرو: ۱۳۹۸/۱۲/۲۶ ۲۳:۵۵" />
 
     <Switch
@@ -53,7 +61,9 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="285dp"
-        android:text="رزرو" />
+        android:text="رزرو"
+        android:textSize="14dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/reserve_card_reserved"
@@ -64,7 +74,10 @@
         android:layout_alignParentLeft="true"
         android:layout_marginStart="323dp"
         android:layout_marginLeft="323dp"
-        android:text="رزرو شده" />
+        android:textColor="@color/reserved"
+        android:text="رزرو شده"
+        android:textSize="16dp"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/reserve_card_cancel"
@@ -76,6 +89,8 @@
         android:layout_marginStart="309dp"
         android:layout_marginLeft="309dp"
         android:layout_marginTop="0dp"
-        android:text="کنسل" />
+        android:text="کنسل"
+        android:textSize="16dp"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

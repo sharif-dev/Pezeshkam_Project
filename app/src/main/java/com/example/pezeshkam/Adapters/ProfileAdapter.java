@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.ResultReceiver;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class ProfileAdapter extends ArrayAdapter<ReserveCard> {
         final Button cl = view.findViewById(R.id.reserve_card_cancel);
 
         @Nullable String patientID = reserveCard.getPatientID();
+        String doctorID = reserveCard.getDoctorID();
         pm.setText("شماره تماس بیمار: " + reserveCard.getPatientMobile());
         pn.setText("نام بیمار: " + reserveCard.getPatientName());
         un.setText("نام دکتر:       " + reserveCard.getName());
@@ -73,11 +75,11 @@ public class ProfileAdapter extends ArrayAdapter<ReserveCard> {
         date.setText("تاریخ:   " + reserveCard.getDate() + "  "
                 + reserveCard.getStart() + " الی " + reserveCard.getEnd());
 
-        cl.setVisibility(View.INVISIBLE);
-        rd.setVisibility(View.INVISIBLE);
-        sw.setVisibility(View.INVISIBLE);
-        pn.setVisibility(View.INVISIBLE);
-        pm.setVisibility(View.INVISIBLE);
+        cl.setVisibility(View.GONE);
+        rd.setVisibility(View.GONE);
+        sw.setVisibility(View.GONE);
+        pn.setVisibility(View.GONE);
+        pm.setVisibility(View.GONE);
         sw.setChecked(reserveCard.isCatched());
 
         final ProfileAdapter adapter = this;
@@ -103,19 +105,20 @@ public class ProfileAdapter extends ArrayAdapter<ReserveCard> {
                 thread.start();
             }
         });
-
         if (!uID.equals(pID)) {
             if (uID.equals(patientID) || patientID == null)
                 sw.setVisibility(View.VISIBLE);
             else
                 rd.setVisibility(View.VISIBLE);
-        } else {
+        } else if (uID.equals(doctorID)){
                 pm.setVisibility(View.VISIBLE);
                 pn.setVisibility(View.VISIBLE);
                 cl.setVisibility(View.VISIBLE);
                 if (patientID != null)
                     cl.setText("کنسل");
                  else cl.setText("حذف");
+        } else {
+            sw.setVisibility(View.VISIBLE);
         }
         return view;
     }
