@@ -125,18 +125,23 @@ public class SignUpFragment extends Fragment {
                 getString(R.string.signup_api_url), jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-//                        System.out.println("RRR" + response);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("username", username);
-                        NavHostFragment.findNavController(SignUpFragment.this)
-                                .navigate(R.id.action_signup_to_login, bundle);
+                    public void onResponse(final JSONObject response) {
+                        System.out.println("R_signup" + response);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    sendSetProfileRequest(response.get("key").toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        System.out.println("EEE" + error);
+                        System.out.println("E_signup" + error);
                         progressBar.setVisibility(View.INVISIBLE);
                         if (error instanceof TimeoutError) {
                             showToast(getString(R.string.server_down_error));
@@ -155,7 +160,60 @@ public class SignUpFragment extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
+    private void sendSetProfileRequest(final String key) {
+        final String username = usernameEditText.getText().toString();
+        String name = nameEditText.getText().toString();
+        String phone = phoneEditText.getText().toString();
+        final JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("username", username);
+            jsonObject.put("name", name);
+            jsonObject.put("phone_number", phone);
+            jsonObject.put("is_doctor", (isDoctorSwitch.isChecked() ? 1 : 0));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                getString(R.string.setprofile_api_url), jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("R_setprof:" + response);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        showToast(getString(R.string.successful_signup_msg));
+                        Bundle bundle = new Bundle();
+                        bundle.putString("username", username);
+                        NavHostFragment.findNavController(SignUpFragment.this)
+                                .navigate(R.id.action_signup_to_login, bundle);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("E_setprof:" + error);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        if (error instanceof TimeoutError) {
+                            showToast(getString(R.string.server_down_error));
+                        } else {
+                            showToast(getString(R.string.unsuccessful_signup_error));
+                        }
+                    }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                params.put("authorization", "Token " + key);
+                return params;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
     void showToast(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 }
+
+//Note: E:\semester 6\Mobile Programming\Pezeshkam_Project\app\src\main\java\com\example\pezeshkam\Fragments\SignUpFragment.java uses or overrides a deprecated API.
+//        Note: Recompile with -Xlint:deprecation for details.

@@ -22,8 +22,10 @@
     <string name="empty_phone_error">* لطفا شماره همراه خود را وارد کنید</string>
     <string name="unsuccessful_login_error">خطا در ورود</string>
     <string name="unsuccessful_signup_error">خطا در ایجاد حساب کاربری</string>
+    <string name="successful_signup_msg">حساب کاربری با موفقیت ایجاد شد</string>
     <string name="server_down_error">خطا در سرور</string>
 
     <string name="login_api_url">http://10.0.2.2:8000/api/rest-auth/login/</string>
     <string name="signup_api_url">http://10.0.2.2:8000/api/rest-auth/registration/</string>
+    <string name="setprofile_api_url">http://10.0.2.2:8000/set_profile/</string>
 </resources>
