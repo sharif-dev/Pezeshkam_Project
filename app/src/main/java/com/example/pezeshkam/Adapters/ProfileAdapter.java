@@ -3,6 +3,7 @@ package com.example.pezeshkam.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.os.ResultReceiver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import com.example.pezeshkam.Models.ReserveCard;
 import com.example.pezeshkam.R;
 import com.example.pezeshkam.Threads.DelCanThread;
+import com.example.pezeshkam.Threads.ReserveThread;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +62,7 @@ public class ProfileAdapter extends ArrayAdapter<ReserveCard> {
         TextView rd = view.findViewById(R.id.reserve_card_reserved);
         TextView pn = view.findViewById(R.id.reserve_card_patient_name);
         TextView pm = view.findViewById(R.id.reserve_card_patient_mobile);
-        Switch sw = view.findViewById(R.id.reserve_card_switch);
+        final Switch sw = view.findViewById(R.id.reserve_card_switch);
         final Button cl = view.findViewById(R.id.reserve_card_cancel);
 
         @Nullable String patientID = reserveCard.getPatientID();
@@ -79,6 +81,16 @@ public class ProfileAdapter extends ArrayAdapter<ReserveCard> {
         sw.setChecked(reserveCard.isCatched());
 
         final ProfileAdapter adapter = this;
+        sw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int rid = Integer.parseInt(reserveCard.getId());
+                int pid = Integer.parseInt(uID);
+                ReserveThread thread = new ReserveThread(rid, pid, context, reserveCards,
+                        sw, adapter, profHandler);
+                thread.start();
+            }
+        });
         cl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
