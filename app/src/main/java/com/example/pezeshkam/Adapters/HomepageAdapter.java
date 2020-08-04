@@ -49,8 +49,7 @@ public class HomepageAdapter extends ArrayAdapter<DoctorCard> {
         TextView occupation = view.findViewById(R.id.doctor_occupation);
         ImageView image = view.findViewById(R.id.doctor_img);
         String imageURL = "http://10.0.2.2:8000" + doctorCard.getImage();
-        Log.i("image URL", imageURL);
-        Picasso.get().load(imageURL).into(image);
+        Glide.with(context).load(imageURL).into(image);
         username.setText("نام کاربری:       " + doctorCard.getUsername());
         TextView phone = view.findViewById(R.id.doctor_phone);
         phone.setText("شماره تماس:‌    " + doctorCard.getPhone());
