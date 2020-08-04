@@ -5,11 +5,13 @@ public class DoctorCard {
     private String phone;
     private String image;
     private String occupation;
-    public DoctorCard(String username, String phone, String image, String occupation) {
+    private String pk;
+    public DoctorCard(String username, String phone, String image, String occupation, String pk) {
         this.username = username;
         this.phone = phone;
         this.image = image;
         this.occupation = occupation;
+        this.pk = pk;
     }
 
     public String getImage() {
@@ -26,5 +28,9 @@ public class DoctorCard {
 
     public String getOccupation() {
         return occupation;
+    }
+
+    public String getPk() {
+        return pk;
     }
 }
