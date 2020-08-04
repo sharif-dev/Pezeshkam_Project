@@ -85,10 +85,10 @@ public class SignUpFragment extends Fragment {
                     usernameEditText.setError(getString(R.string.empty_username_error));
                     isInputCorrect = false;
                 }
-//                if (email.isEmpty()) {
-//                    emailEditText.setError(getString(R.string.empty_email_error));
-//                    isInputCorrect = false;
-//                }
+                if (email.isEmpty()) {
+                    emailEditText.setError(getString(R.string.empty_email_error));
+                    isInputCorrect = false;
+                }
                 if (password.isEmpty()) {
                     passwordEditText.setError(getString(R.string.empty_password_error));
                     isInputCorrect = false;
