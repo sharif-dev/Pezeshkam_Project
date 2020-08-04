@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +41,8 @@ public class Profile extends AppCompatActivity {
     boolean isDoctor = true;
     public static Handler profHandler;
 
-    ListView list1, list2;
-    TextView list1_l, list2_l;
+    ListView list1;
+    TextView list1_l;
     Button submit, reserve;
     TextView user_t, occup_t, phone_t, pass_l, email_t;
     TextInputEditText user_i, occup_i, phone_i, pass_i, email_i;
@@ -64,38 +65,30 @@ public class Profile extends AppCompatActivity {
         getComponents();
         getInitDatas();
         profileHandler();
-        if (uID == pID)
-            seenByOwner();
-        else
-            seenByOthers();
     }
 
     private void seenByOthers() {
-        user_i.setVisibility(View.INVISIBLE);
-        occup_i.setVisibility(View.INVISIBLE);
-        phone_i.setVisibility(View.INVISIBLE);
-        email_i.setVisibility(View.INVISIBLE);
-        pass_i.setVisibility(View.INVISIBLE);
-        pass_l.setVisibility(View.INVISIBLE);
-        submit.setVisibility(View.INVISIBLE);
-        card_submit.setVisibility(View.INVISIBLE);
-        reserve.setVisibility(View.INVISIBLE);
-        card_reserve.setVisibility(View.INVISIBLE);
-        list2.setVisibility(View.INVISIBLE);
-        list2_l.setVisibility(View.INVISIBLE);
-        list1_l.setText("وقت های خالی");
+        user_i.setVisibility(View.GONE);
+        occup_i.setVisibility(View.GONE);
+        phone_i.setVisibility(View.GONE);
+        email_i.setVisibility(View.GONE);
+        pass_i.setVisibility(View.GONE);
+        pass_l.setVisibility(View.GONE);
+        submit.setVisibility(View.GONE);
+        card_submit.setVisibility(View.GONE);
+        reserve.setVisibility(View.GONE);
+        card_reserve.setVisibility(View.GONE);
+        list1_l.setText("تمامی رزروها");
     }
 
     private void seenByOwner() {
-        user_t.setVisibility(View.INVISIBLE);
-        occup_t.setVisibility(View.INVISIBLE);
-        phone_t.setVisibility(View.INVISIBLE);
-        email_t.setVisibility(View.INVISIBLE);
+        user_t.setVisibility(View.GONE);
+        occup_t.setVisibility(View.GONE);
+        phone_t.setVisibility(View.GONE);
+        email_t.setVisibility(View.GONE);
         if (!isDoctor) {
-            reserve.setVisibility(View.INVISIBLE);
-            card_reserve.setVisibility(View.INVISIBLE);
-            list2.setVisibility(View.INVISIBLE);
-            list2_l.setVisibility(View.INVISIBLE);
+            reserve.setVisibility(View.GONE);
+            card_reserve.setVisibility(View.GONE);
             list1_l.setText("وقت های گرفته شده");
         } else {
             list1_l.setText("تمامی رزروها");
@@ -120,9 +113,7 @@ public class Profile extends AppCompatActivity {
         card_reserve = findViewById(R.id.prof_card_reserve);
         card_submit = findViewById(R.id.prof_card_submit);
         list1 = findViewById(R.id.prof_list1);
-        list2 = findViewById(R.id.prof_list2);
         list1_l = findViewById(R.id.prof_list1_label);
-        list2_l = findViewById(R.id.prof_list2_label);
         image = findViewById(R.id.prof_image);
     }
 //    public TextWatcher searchTextWatcher() {
@@ -154,7 +145,7 @@ public class Profile extends AppCompatActivity {
 //    }
 
     public void getInitDatas() {
-        scrollView.setVisibility(View.INVISIBLE);
+        scrollView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         final Context cx = this;
         CountDownTimer timer = new CountDownTimer(2000, 1000) {
@@ -193,9 +184,9 @@ public class Profile extends AppCompatActivity {
 //            timer.cancel();
 //        else {
 //            typing = true;
-//            listView.setVisibility(View.INVISIBLE);
+//            listView.setVisibility(View.GONE);
 //            bar.setVisibility(View.VISIBLE);
-//            notFoundOrError.setVisibility(View.INVISIBLE);
+//            notFoundOrError.setVisibility(View.GONE);
 //        }
 //    }
 
@@ -207,6 +198,10 @@ public class Profile extends AppCompatActivity {
         } else if (msg.what == NON_EMPTY_RESULT) {
             scrollView.setVisibility(View.VISIBLE);
             setDatas((com.example.pezeshkam.Models.Profile) msg.obj);
+            if (uID == pID)
+                seenByOwner();
+            else
+                seenByOthers();
         } else if (msg.what == RESQUEST_FAILED) {
             toast.setText("درخواست با خطا مواجه شد");
             toast.show();
@@ -214,7 +209,7 @@ public class Profile extends AppCompatActivity {
             toast.setText("درخواست با موفقیت انجام شد");
             toast.show();
         }
-        progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     public void setDatas(com.example.pezeshkam.Models.Profile profile) {
@@ -222,6 +217,7 @@ public class Profile extends AppCompatActivity {
         String phone = profile.getPhone();
         String occupation = profile.getOccupation();
         String avatar = profile.getAvatar();
+        isDoctor = profile.isDoctor();
         if (uID == pID) {
             user_i.setText(username);
             occup_i.setText(occupation);
@@ -231,6 +227,7 @@ public class Profile extends AppCompatActivity {
             occup_t.setText(occupation);
             phone_t.setText(phone);
         }
+
         ArrayAdapter adapter1 = new ProfileAdapter(this, 0, profile.getCards(),
                 uID, pID, true);
         list1.setAdapter(adapter1);

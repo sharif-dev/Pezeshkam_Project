@@ -51,22 +51,6 @@
         android:textStyle="bold"
         android:text="تاریخ رزرو: ۱۳۹۸/۱۲/۲۶ ۲۳:۵۵" />
 
-    <TextView
-        android:id="@+id/reserve_card_patient_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/reserve_card_occupation"
-        android:layout_marginTop="46dp"
-        android:text="تاریخ رزرو: ۱۳۹۸/۱۲/۲۶ ۲۳:۵۵" />
-
-    <TextView
-        android:id="@+id/reserve_card_patient_mobile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/reserve_card_occupation"
-        android:layout_marginTop="81dp"
-        android:text="تاریخ رزرو: ۱۳۹۸/۱۲/۲۶ ۲۳:۵۵" />
-
     <Switch
         android:id="@+id/reserve_card_switch"
         android:layout_width="79dp"

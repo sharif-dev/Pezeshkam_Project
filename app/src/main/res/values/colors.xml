@@ -9,4 +9,8 @@
     <color name="colorBackgroundSide1">#66ddff</color>
     <color name="colorBackgroundSide2">#66ffcc</color>
     <color name="white">#fff</color>
+    <color name="doctor_card">#DAF6FF</color>
+    <color name="toolbar">#9AAAFF</color>
+    <color name="homepage_background">#F9FFFF</color>
+    <color name="reserved">#977203</color>
 </resources>
