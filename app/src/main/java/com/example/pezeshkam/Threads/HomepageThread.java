@@ -43,7 +43,7 @@ public class HomepageThread extends Thread {
     Context context;
     String URL;
     String token;
-
+    public static final HashMap<String, String> params = new HashMap<>();
     public HomepageThread(Handler handler, Context context, String URL, String token) {
         this.handler = handler;
         this.context = context;
@@ -62,7 +62,8 @@ public class HomepageThread extends Thread {
             public void onResponse(JSONObject response) {
                 msg.what = USER_ID;
                 try {
-                    msg.obj = Integer.toString((Integer) response.get("pk"));
+                    msg.obj = response.get("pk");
+                    handler.sendMessage(msg);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +103,6 @@ public class HomepageThread extends Thread {
         }) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
                 params.put("Authorization", "Token " + token);
                 params.put("Content-type", "application/json");
                 Log.i("volley header", params.toString());
