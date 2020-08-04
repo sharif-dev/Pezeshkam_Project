@@ -6,12 +6,17 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pezeshkam.Adapters.ProfileAdapter;
 import com.example.pezeshkam.Models.Profile;
@@ -21,11 +26,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.pezeshkam.Activities.Homepage.NON_EMPTY_RESULT;
+import static com.example.pezeshkam.Activities.Homepage.REQUEST_SUCCEED;
 import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
 import static com.example.pezeshkam.Activities.Homepage.USER_ID;
 import static com.example.pezeshkam.Threads.HomepageThread.params;
@@ -36,13 +43,15 @@ public class DelCanThread extends Thread {
     String type;
     ArrayList<ReserveCard> cards;
     ProfileAdapter adapter;
+    Handler handler;
     public DelCanThread(int rid, Context context, String type,
-                        ArrayList<ReserveCard> cards, ProfileAdapter adapter) {
+                        ArrayList<ReserveCard> cards, ProfileAdapter adapter, Handler handler) {
         this.rid = rid;
         this.context = context;
         this.type = type;
         this.cards = cards;
         this.adapter = adapter;
+        this.handler = handler;
     }
 
     @Override
@@ -50,12 +59,18 @@ public class DelCanThread extends Thread {
         super.run();
         final Message msg = new Message();
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
-        String URL = "http://10.0.2.2:8000/" + this.type + "/";
-        final Toast toast = Toast.makeText(context, "message", Toast.LENGTH_LONG);
-        JsonArrayRequest requestDelCan = new JsonArrayRequest(Request.Method.POST, URL, null
-                , new Response.Listener<JSONArray>() {
+        String URL = "http://10.0.2.2:8000/" + this.type;
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("reservation_id", this.rid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String mRequestBody = jsonBody.toString();
+        StringRequest requestDelCan = new StringRequest(Request.Method.POST, URL
+                , new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(String response) {
                 ReserveCard card = null;
                 for(ReserveCard cardd: cards) {
                     if (cardd.getId().equals(Integer.toString(rid)))
@@ -64,23 +79,36 @@ public class DelCanThread extends Thread {
                 if (type.equals("delete_reservation/"))
                     cards.remove(card);
                 else if (type.equals("delete_patient_reservation/")) {
+                    assert card != null;
                     card.setPatientID(null);
                 }
-                toast.setText("درخواست با موفقیت انجام شد");
-                toast.show();
+                adapter.notifyDataSetChanged();
+                msg.what = REQUEST_SUCCEED;
+                handler.sendMessage(msg);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                toast.setText("درخواست با خطا مواجه شد");
-                toast.show();
+                msg.what = RESQUEST_FAILED;
+                handler.sendMessage(msg);
             }
         }){
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("reservation_id",Integer.toString(rid));
-                return params;
+            public byte[] getBody() {
+                try {
+                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    return null;
+                }
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+                    responseString = String.valueOf(response.statusCode);
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
             }
             @Override
             public Map<String, String> getHeaders() {

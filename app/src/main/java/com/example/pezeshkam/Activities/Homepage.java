@@ -35,7 +35,7 @@ public class Homepage extends AppCompatActivity {
     public static final int NON_EMPTY_RESULT = 1;
     public static final int RESQUEST_FAILED = 2;
     public static final int USER_ID = 3;
-
+    public static final int REQUEST_SUCCEED = 4;
     ListView listView;
     CountDownTimer timer;
     ProgressBar bar;

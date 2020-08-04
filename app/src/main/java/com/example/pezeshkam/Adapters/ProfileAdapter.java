@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.example.pezeshkam.Activities.Profile.profHandler;
+
 public class ProfileAdapter extends ArrayAdapter<ReserveCard> {
 
     private String uID, pID;
@@ -82,9 +84,10 @@ public class ProfileAdapter extends ArrayAdapter<ReserveCard> {
             public void onClick(View view) {
                 int rid = Integer.parseInt(reserveCard.getId());
                 String type = "delete_reservation/";
-                if (cl.getText().equals("delete_patient_reservation/"))
+                if (cl.getText().equals("کنسل"))
                     type = "delete_patient_reservation/";
-                DelCanThread thread = new DelCanThread(rid, context, type, reserveCards, adapter);
+                DelCanThread thread = new DelCanThread(rid, context, type, reserveCards,
+                        adapter, profHandler);
                 thread.start();
             }
         });

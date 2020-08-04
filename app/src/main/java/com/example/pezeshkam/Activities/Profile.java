@@ -13,9 +13,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,27 +24,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.pezeshkam.Adapters.HomepageAdapter;
 import com.example.pezeshkam.Adapters.ProfileAdapter;
-import com.example.pezeshkam.Models.DoctorCard;
 import com.example.pezeshkam.R;
 import com.example.pezeshkam.Threads.ProfileThread1;
 import com.google.android.material.textfield.TextInputEditText;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 import static com.example.pezeshkam.Activities.Homepage.EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.NON_EMPTY_RESULT;
+import static com.example.pezeshkam.Activities.Homepage.REQUEST_SUCCEED;
 import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
-import static com.example.pezeshkam.Activities.Homepage.USER_ID;
-import static com.example.pezeshkam.Activities.Homepage.handler;
 
 public class Profile extends AppCompatActivity {
 
     int uID, pID;
     boolean isDoctor = true;
-    static Handler handler;
+    public static Handler profHandler;
 
     ListView list1, list2;
     TextView list1_l, list2_l;
@@ -172,14 +164,14 @@ public class Profile extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                ProfileThread1 thread = new ProfileThread1(handler, pID, cx);
+                ProfileThread1 thread = new ProfileThread1(profHandler, pID, cx);
                 thread.start();
             }
         }.start();
     }
 
     public void profileHandler() {
-        handler = new Handler(Looper.getMainLooper()) {
+        profHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
@@ -217,6 +209,9 @@ public class Profile extends AppCompatActivity {
             setDatas((com.example.pezeshkam.Models.Profile) msg.obj);
         } else if (msg.what == RESQUEST_FAILED) {
             toast.setText("درخواست با خطا مواجه شد");
+            toast.show();
+        } else if (msg.what == REQUEST_SUCCEED) {
+            toast.setText("درخواست با موفقیت انجام شد");
             toast.show();
         }
         progressBar.setVisibility(View.INVISIBLE);
