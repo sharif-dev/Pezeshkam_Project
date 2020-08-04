@@ -28,19 +28,4 @@
     <string name="login_api_url">http://10.0.2.2:8000/api/rest-auth/login/</string>
     <string name="signup_api_url">http://10.0.2.2:8000/api/rest-auth/registration/</string>
     <string name="setprofile_api_url">http://10.0.2.2:8000/set_profile/</string>
-
-    <string name="date">تاریخ:</string>
-    <string name="year">سال</string>
-    <string name="month">ماه</string>
-    <string name="day">روز</string>
-    <string name="select_begin_time">انتخاب زمان شروع</string>
-    <string name="select_end_time">انتخاب زمان پایان</string>
-    <string name="time_per_reserve">زمان هر رزرو</string>
-    <string name="minute">دقیقه</string>
-    <string name="default_reserve_time">10</string>
-    <string name="create">ایجاد زمان رزرو</string>
-    <string name="empty_date_error">اطفا تاریخ را وارد نمایید</string>
-    <string name="incorrect_date_error">لطفا تاریخ صحیح وارد نمایید</string>
-    <string name="incorrect_reserve_time_error">لطفا زمان مناسب انتخاب نمایید</string>
-    <string name="empty_reserve_time_error">لطفا زمان هر رزرو را مشخص نمایید</string>
 </resources>
