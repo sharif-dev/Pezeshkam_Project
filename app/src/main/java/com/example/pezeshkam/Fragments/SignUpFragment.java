@@ -77,10 +77,10 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 boolean isInputCorrect = true;
-                final String username = usernameEditText.getText().toString();
-                final String email = emailEditText.getText().toString();
-                final String password = passwordEditText.getText().toString();
-                final String confirmPassword = confirmPasswordEditText.getText().toString();
+                final String username = usernameEditText.getText().toString().trim();
+                final String email = emailEditText.getText().toString().trim();
+                final String password = passwordEditText.getText().toString().trim();
+                final String confirmPassword = confirmPasswordEditText.getText().toString().trim();
                 if (username.isEmpty()) {
                     usernameEditText.setError(getString(R.string.empty_username_error));
                     isInputCorrect = false;
@@ -126,7 +126,7 @@ public class SignUpFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(final JSONObject response) {
-                        System.out.println("R_signup" + response);
+//                        System.out.println("R_signup" + response);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -141,7 +141,7 @@ public class SignUpFragment extends Fragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("E_signup" + error);
+//                        System.out.println("E_signup" + error);
                         progressBar.setVisibility(View.INVISIBLE);
                         if (error instanceof TimeoutError) {
                             showToast(getString(R.string.server_down_error));
@@ -161,9 +161,9 @@ public class SignUpFragment extends Fragment {
     }
 
     private void sendSetProfileRequest(final String key) {
-        final String username = usernameEditText.getText().toString();
-        String name = nameEditText.getText().toString();
-        String phone = phoneEditText.getText().toString();
+        final String username = usernameEditText.getText().toString().trim();
+        String name = nameEditText.getText().toString().trim();
+        String phone = phoneEditText.getText().toString().trim();
         final JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", username);
@@ -179,23 +179,15 @@ public class SignUpFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("R_setprof:" + response);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        showToast(getString(R.string.successful_signup_msg));
-                        Bundle bundle = new Bundle();
-                        bundle.putString("username", username);
-                        NavHostFragment.findNavController(SignUpFragment.this)
-                                .navigate(R.id.action_signup_to_login, bundle);
+                        onCreateAccountSuccessful(username);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("E_setprof:" + error);
-                        progressBar.setVisibility(View.INVISIBLE);
                         if (error instanceof TimeoutError) {
                             showToast(getString(R.string.server_down_error));
                         } else {
-                            showToast(getString(R.string.unsuccessful_signup_error));
+                            onCreateAccountSuccessful(username);
                         }
                     }
         }) {
@@ -203,17 +195,23 @@ public class SignUpFragment extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json");
-                params.put("authorization", "Token " + key);
+                params.put("Authorization", "Token " + key);
                 return params;
             }
         };
         requestQueue.add(jsonObjectRequest);
     }
 
+    private void onCreateAccountSuccessful(String username) {
+        progressBar.setVisibility(View.INVISIBLE);
+        showToast(getString(R.string.successful_signup_msg));
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        NavHostFragment.findNavController(SignUpFragment.this)
+                .navigate(R.id.action_signup_to_login, bundle);
+    }
+
     void showToast(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 }
-
-//Note: E:\semester 6\Mobile Programming\Pezeshkam_Project\app\src\main\java\com\example\pezeshkam\Fragments\SignUpFragment.java uses or overrides a deprecated API.
-//        Note: Recompile with -Xlint:deprecation for details.
