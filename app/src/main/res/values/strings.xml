@@ -41,7 +41,7 @@
     <string name="minute">دقیقه</string>
     <string name="default_reserve_time">10</string>
     <string name="create">ایجاد زمان رزرو</string>
-    <string name="empty_date_error">اطفا تاریخ را وارد نمایید</string>
+    <string name="empty_date_error">لطفا تاریخ را وارد نمایید</string>
     <string name="incorrect_date_error">لطفا تاریخ صحیح وارد نمایید</string>
     <string name="incorrect_reserve_time_error">لطفا زمان مناسب انتخاب نمایید</string>
     <string name="empty_reserve_time_error">لطفا زمان هر رزرو را مشخص نمایید</string>

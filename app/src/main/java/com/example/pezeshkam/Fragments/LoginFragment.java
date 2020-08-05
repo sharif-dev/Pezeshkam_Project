@@ -108,7 +108,7 @@ public class LoginFragment extends Fragment {
                     public void onResponse(JSONObject response) {
 //                        System.out.println("RRR" + response);
                         progressBar.setVisibility(View.INVISIBLE);
-                        Intent intent = new Intent(getActivity(), Homepage.class);
+                        Intent intent = new Intent(getActivity(), CreateReserveActivity.class);
                         try {
                             intent.putExtra("token", response.get("key").toString());
                         } catch (JSONException e) {
