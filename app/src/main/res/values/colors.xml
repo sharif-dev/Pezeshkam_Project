@@ -10,7 +10,7 @@
     <color name="doctor_card">#DAF6FF</color>
     <color name="toolbar">#9AAAFF</color>
     <color name="homepage_background">#F9FFFF</color>
-    <color name="reserved">#977203</color>
     <color name="colorWhite">#fff</color>
-    <color name="red">#C10101</color>
+    <color name="red">#BC0101</color>
+    <color name="reserved">#C89601</color>
 </resources>

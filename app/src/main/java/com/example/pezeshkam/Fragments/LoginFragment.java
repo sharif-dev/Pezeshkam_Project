@@ -3,7 +3,6 @@ package com.example.pezeshkam.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,17 +116,17 @@ public class LoginFragment extends Fragment {
                         startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 //                        System.out.println("EEE" + error);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        if (error instanceof TimeoutError) {
-                            showToast(getString(R.string.server_down_error));
-                        } else {
-                            showToast(getString(R.string.unsuccessful_login_error));
-                        }
-                    }
-                }) {
+                progressBar.setVisibility(View.INVISIBLE);
+                if (error instanceof TimeoutError) {
+                    showToast(getString(R.string.server_down_error));
+                } else {
+                    showToast(getString(R.string.unsuccessful_login_error));
+                }
+            }
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> params = new HashMap<>();
