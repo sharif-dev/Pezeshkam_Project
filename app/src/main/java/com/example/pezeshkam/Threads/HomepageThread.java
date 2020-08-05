@@ -35,6 +35,7 @@ import java.util.Map;
 
 import static com.example.pezeshkam.Activities.Homepage.EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.NON_EMPTY_RESULT;
+import static com.example.pezeshkam.Activities.Homepage.PROFILE_PICTURE_RECIEVED;
 import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
 import static com.example.pezeshkam.Activities.Homepage.USER_ID;
 
@@ -57,7 +58,8 @@ public class HomepageThread extends Thread {
         final Message msg = new Message();
         RequestQueue requestQueue = Volley.newRequestQueue(this.context);
         String getUID = "http://10.0.2.2:8000/get_id/";
-        JsonObjectRequest requestID = new JsonObjectRequest(Request.Method.GET, getUID, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest requestID = new JsonObjectRequest(Request.Method.GET, getUID,
+                null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 msg.what = USER_ID;
@@ -86,9 +88,18 @@ public class HomepageThread extends Thread {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.i("response is", response.toString());
+                        Log.i("homeresponse", response.toString());
                         try {
-                            parsingResponse(response);
+                            JSONArray doctors = response;
+                            if (URL.contains("all_doctors")) {
+                                doctors = response.getJSONArray(0);
+                                String image = (String) response.getJSONObject(1).get("avatar");
+                                Message msg2 = new Message();
+                                msg2.what = PROFILE_PICTURE_RECIEVED;
+                                msg2.obj = image;
+                                handler.sendMessage(msg2);
+                            }
+                                parsingResponse(doctors);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

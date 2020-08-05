@@ -3,10 +3,14 @@ package com.example.pezeshkam.Activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -35,6 +39,9 @@ import com.example.pezeshkam.Threads.EditProfileThread;
 import com.example.pezeshkam.Threads.ProfileThread1;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import static com.example.pezeshkam.Activities.Homepage.EMPTY_RESULT;
@@ -42,9 +49,8 @@ import static com.example.pezeshkam.Activities.Homepage.NON_EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.REQUEST_SUCCEED;
 import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
 import static com.example.pezeshkam.Threads.HomepageThread.params;
-
 public class Profile extends AppCompatActivity {
-
+    public static final int PICK_IMAGE = 1;
     int uID, pID;
     boolean isDoctor = true;
     public static Handler profHandler;
@@ -59,7 +65,7 @@ public class Profile extends AppCompatActivity {
     ImageView image;
     RelativeLayout rl1, rl2;
     ActionBar actionBar;
-
+    @Nullable Bitmap img = null;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -77,6 +83,21 @@ public class Profile extends AppCompatActivity {
         clickListeners();
         getInitDatas();
         profileHandler();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                img = BitmapFactory.decodeStream(imageStream);
+                image.setImageBitmap(img);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void seenByOthers() {
@@ -110,6 +131,8 @@ public class Profile extends AppCompatActivity {
             list1_l.setText("تمامی رزروها");
         }
     }
+
+
 
     private void getComponents() {
         progressBar = findViewById(R.id.prof_progressbar);
@@ -190,10 +213,27 @@ public class Profile extends AppCompatActivity {
                         new com.example.pezeshkam.Models.Profile(username, phone, occupation,
                                 "", "", isDoctor, null);
                 EditProfileThread editProfileThread = new EditProfileThread(
-                        getApplicationContext(), profile, profHandler, uID, null);
+                        getApplicationContext(), profile, profHandler, uID, img);
                 editProfileThread.start();
             }
         });
+        if (uID == pID)
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    getIntent.setType("image/*");
+
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    pickIntent.setType("image/*");
+
+                    Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+                    startActivityForResult(chooserIntent, PICK_IMAGE);
+                }
+            });
     }
 
     public void profileMessage(@NonNull Message msg) {

@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.pezeshkam.Adapters.HomepageAdapter;
 import com.example.pezeshkam.Models.DoctorCard;
 import com.example.pezeshkam.R;
@@ -36,6 +37,7 @@ public class Homepage extends AppCompatActivity {
     public static final int RESQUEST_FAILED = 2;
     public static final int USER_ID = 3;
     public static final int REQUEST_SUCCEED = 4;
+    public static final int PROFILE_PICTURE_RECIEVED = 5;
     ListView listView;
     CountDownTimer timer;
     ProgressBar bar;
@@ -188,6 +190,9 @@ public class Homepage extends AppCompatActivity {
             toast.show();
         } else if (msg.what == USER_ID) {
             uid = (int) msg.obj;
+        } else if (msg.what == PROFILE_PICTURE_RECIEVED) {
+            String imageURL = "http://10.0.2.2:8000" + (String) msg.obj;
+            Glide.with(this).load(imageURL).into(profile);
         }
         searchView.setVisibility(View.VISIBLE);
         input.setVisibility(View.VISIBLE);

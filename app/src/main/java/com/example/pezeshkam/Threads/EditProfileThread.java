@@ -55,14 +55,14 @@ import static com.example.pezeshkam.Threads.HomepageThread.params;
 public class EditProfileThread extends Thread {
     Context context;
     Profile profile;
-    @Nullable File file;
+    @Nullable Bitmap image;
     Handler handler;
     int uID;
     public EditProfileThread(Context context, Profile profile, Handler handler, int uID,
-                             @Nullable File file) {
+                             @Nullable Bitmap image) {
         this.context = context;
         this.profile = profile;
-        this.file = file;
+        this.image = image;
         this.handler = handler;
         this.uID = uID;
     }
@@ -85,6 +85,14 @@ public class EditProfileThread extends Thread {
 //            byte[] data = bos.toByteArray();
 //            ByteArrayBody bab = new ByteArrayBody(data, "forest.jpg");
 //            reqEntity.addPart("picture", bab);
+            byte[] data = null;
+            if(image!=null){
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                data = bos.toByteArray();
+                reqEntity.addPart("avatar", new ByteArrayBody(data,
+                        "image/jpeg", "test2.jpg"));
+            }
 
             postRequest.setHeader("Authorization", params.get("Authorization"));
             postRequest.setEntity(reqEntity);

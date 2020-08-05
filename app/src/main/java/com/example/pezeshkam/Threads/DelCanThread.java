@@ -81,6 +81,7 @@ public class DelCanThread extends Thread {
                 else if (type.equals("delete_patient_reservation/")) {
                     assert card != null;
                     card.setPatientID(null);
+                    card.toggleCached();
                 }
                 adapter.notifyDataSetChanged();
                 msg.what = REQUEST_SUCCEED;

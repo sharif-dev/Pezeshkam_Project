@@ -88,8 +88,13 @@ public class ProfileAdapter extends ArrayAdapter<ReserveCard> {
             public void onClick(View view) {
                 int rid = Integer.parseInt(reserveCard.getId());
                 int pid = Integer.parseInt(uID);
-                ReserveThread thread = new ReserveThread(rid, pid, context, reserveCards,
+                Thread thread;
+                if (!reserveCard.isCatched())
+                thread = new ReserveThread(rid, pid, context, reserveCards,
                         sw, adapter, profHandler);
+                else
+                    thread = new DelCanThread(rid, context, "delete_patient_reservation/",
+                            reserveCards, adapter, profHandler);
                 thread.start();
             }
         });
