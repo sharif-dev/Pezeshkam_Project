@@ -17,6 +17,9 @@
         <activity
             android:name=".Activities.CreateReserveActivity"
             android:parentActivityName=".Activities.Profile">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.Profile" />
         </activity>
 
         <activity android:name=".Activities.Homepage"

@@ -15,15 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pezeshkam.R;
 
@@ -48,7 +46,6 @@ public class SignUpFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.signup_fragment, container, false);
     }
 
@@ -190,8 +187,10 @@ public class SignUpFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         if (error instanceof TimeoutError) {
                             showToast(getString(R.string.server_down_error));
-                        } else {
+                        } else if (error instanceof ParseError){
                             onCreateAccountSuccessful(username);
+                        } else {
+                            showToast(getString(R.string.unsuccessful_signup_error));
                         }
                     }
         }) {

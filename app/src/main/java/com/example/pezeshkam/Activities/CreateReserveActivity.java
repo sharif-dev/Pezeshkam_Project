@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -53,6 +54,7 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
         setBeginTimeBtn = findViewById(R.id.set_begin_time_btn);
         setEndTimeBtn = findViewById(R.id.set_end_time_btn);
         requestQueue = Volley.newRequestQueue(this);
+        System.out.println("AAA " + getIntent().getIntExtra("id", 1));
         handler = new Handler();
 
         setBeginTimeBtn.setOnClickListener(new View.OnClickListener() {
@@ -120,43 +122,11 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        sendGetDoctorIDRequest();
                         sendCreateReserveRequest();
                     }
                 });
             }
         });
-    }
-
-    private void sendGetDoctorIDRequest() {
-        String url = getString(R.string.getid_api_url);
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            doctor_id = (int) response.get("doctor_id");
-                        } catch (JSONException e) {
-                            System.out.println("oh oh oh");
-                            e.printStackTrace();
-                        }
-                        System.out.println("yes - " + response);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (error instanceof TimeoutError) {
-                            showToast(getString(R.string.server_down_error));
-                        }
-                        System.out.println("no - " + error);
-                    }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return HomepageThread.params;
-            }
-        };
-        requestQueue.add(request);
     }
 
     private void sendCreateReserveRequest() {
@@ -167,10 +137,21 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
             jsonObject.put("year", year);
             jsonObject.put("start_hour", begin_hour);
             jsonObject.put("start_minute", begin_minute);
-            jsonObject.put("end_hour", end_hour);
-            jsonObject.put("end_minute", end_minute);
             jsonObject.put("period", period);
             jsonObject.put("doctor_id", doctor_id);
+            int dif = (end_hour - begin_hour) * 60 + end_minute - begin_minute;
+            if (dif < period) {
+                showToast(getString(R.string.cant_create_reserve_error));
+                return;
+            }
+            if (dif % period != 0) {
+                dif -= (dif % period);
+                int m = begin_hour * 60 + begin_minute + dif;
+                end_hour = (m - (m % 60)) / 60;
+                end_minute = m % 60;
+            }
+            jsonObject.put("end_hour", end_hour);
+            jsonObject.put("end_minute", end_minute);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -179,14 +160,17 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("yes2 - " + response);
+                        showToast(getString(R.string.successful_create_reserve_msg));
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("no2 - " + error);
                         if (error instanceof TimeoutError) {
                             showToast(getString(R.string.server_down_error));
+                        } else if (error instanceof ParseError){
+                            showToast(getString(R.string.successful_create_reserve_msg));
+                        } else {
+                            showToast(getString(R.string.unsuccessful_create_reserve_error));
                         }
                     }
         }) {
