@@ -1,20 +1,18 @@
 package com.example.pezeshkam.Activities;
 
-import androidx.appcompat.app.ActionBar;
-
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -34,16 +32,10 @@ import com.example.pezeshkam.Threads.HomepageThread;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 public class CreateReserveActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
-    private Button createBtn;
-    private Button setBeginTimeBtn;
-    private Button setEndTimeBtn;
     private String whichTimePickerIsClicked;
     private Handler handler;
     private RequestQueue requestQueue;
@@ -59,14 +51,11 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
         actionBar.setTitle("ایجاد رزرو");
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setBackgroundDrawable(new ColorDrawable(R.color.toolbar));
-        createBtn = findViewById(R.id.create_reserve_btn);
-        setBeginTimeBtn = findViewById(R.id.set_begin_time_btn);
-        setEndTimeBtn = findViewById(R.id.set_end_time_btn);
         requestQueue = Volley.newRequestQueue(this);
-        System.out.println("AAA " + getIntent().getIntExtra("id", 1));
+        doctor_id = getIntent().getIntExtra("id", 1);
         handler = new Handler();
 
-        setBeginTimeBtn.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.set_begin_time_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogFragment timePicker = new TimePickerFragment();
@@ -75,7 +64,7 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
             }
         });
 
-        setEndTimeBtn.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.set_end_time_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogFragment timePicker = new TimePickerFragment();
@@ -84,7 +73,7 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
             }
         });
 
-        createBtn.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.create_reserve_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String y_str = ((EditText) findViewById(R.id.reserve_year_text)).getText().toString();
@@ -169,6 +158,7 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        System.out.println("A" + response);
                         showToast(getString(R.string.successful_create_reserve_msg));
                     }
                 }, new Response.ErrorListener() {
