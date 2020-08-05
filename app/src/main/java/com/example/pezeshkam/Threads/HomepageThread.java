@@ -76,8 +76,8 @@ public class HomepageThread extends Thread {
         }){
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", "Token " + token);
+                if (!params.containsKey("Authorization"))
+                    params.put("Authorization", "Token " + token);
                 Log.i("volley header", params.toString());
                 return params;
             }
@@ -103,7 +103,8 @@ public class HomepageThread extends Thread {
         }) {
             @Override
             public Map<String, String> getHeaders() {
-                params.put("Authorization", "Token " + token);
+                if (!params.containsKey("Authorization"))
+                    params.put("Authorization", "Token " + token);
                 params.put("Content-type", "application/json");
                 Log.i("volley header", params.toString());
                 return params;

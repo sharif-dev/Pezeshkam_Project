@@ -1,9 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
-
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.pezeshkam"
         minSdkVersion 16
@@ -38,5 +49,5 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-
+    implementation 'org.apache.httpcomponents:httpmime:4.3.1'
 }

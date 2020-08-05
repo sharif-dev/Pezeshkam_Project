@@ -15,6 +15,8 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.pezeshkam.Adapters.ProfileAdapter;
 import com.example.pezeshkam.R;
+import com.example.pezeshkam.Threads.EditProfileThread;
 import com.example.pezeshkam.Threads.ProfileThread1;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -94,7 +97,9 @@ public class Profile extends AppCompatActivity {
         user_t.setVisibility(View.GONE);
         occup_t.setVisibility(View.GONE);
         phone_t.setVisibility(View.GONE);
-        email_t.setVisibility(View.GONE);
+        email_i.setVisibility(View.INVISIBLE);
+        pass_i.setVisibility(View.INVISIBLE);
+        pass_l.setVisibility(View.INVISIBLE);
         exit.setVisibility(View.VISIBLE);
         card_exit.setVisibility(View.VISIBLE);
         if (!isDoctor) {
@@ -173,6 +178,20 @@ public class Profile extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), CreateReserveActivity.class);
                 intent.putExtra("id", uID);
                 startActivity(intent);
+            }
+        });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = String.valueOf(user_i.getText());
+                String phone = String.valueOf(phone_i.getText());
+                String occupation = String.valueOf(occup_i.getText());
+                com.example.pezeshkam.Models.Profile profile =
+                        new com.example.pezeshkam.Models.Profile(username, phone, occupation,
+                                "", "", isDoctor, null);
+                EditProfileThread editProfileThread = new EditProfileThread(
+                        getApplicationContext(), profile, profHandler, uID, null);
+                editProfileThread.start();
             }
         });
     }

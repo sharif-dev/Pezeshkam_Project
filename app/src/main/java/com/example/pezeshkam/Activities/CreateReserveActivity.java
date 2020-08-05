@@ -1,6 +1,10 @@
 package com.example.pezeshkam.Activities;
 
+import androidx.appcompat.app.ActionBar;
+
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -44,12 +48,17 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
     private Handler handler;
     private RequestQueue requestQueue;
     private int year, month, day, begin_hour, begin_minute, end_hour, end_minute, period, doctor_id = 1;
-
+    private ActionBar actionBar;
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_reserve);
 
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("ایجاد رزرو");
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setBackgroundDrawable(new ColorDrawable(R.color.toolbar));
         createBtn = findViewById(R.id.create_reserve_btn);
         setBeginTimeBtn = findViewById(R.id.set_begin_time_btn);
         setEndTimeBtn = findViewById(R.id.set_end_time_btn);
