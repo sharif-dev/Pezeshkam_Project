@@ -11,35 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="260dp"
         android:layout_marginRight="180dp"/>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/prof_card_exit"
-        android:layout_width="74dp"
-        android:layout_height="33dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="305dp"
-        android:layout_marginLeft="305dp"
-        android:layout_marginTop="100dp"
-        app:cardCornerRadius="30dp">
 
-        <Button
-            android:id="@+id/prof_button_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/red"
-            android:text="خروج"
-            android:textColor="@color/colorWhite"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/prof_pass_i"
-            app:layout_constraintVertical_bias="0.578" />
-
-    </androidx.cardview.widget.CardView>
     <ScrollView
-        android:id="@+id/prof_scroll"
         android:layout_width="fill_parent"
         android:layout_height="match_parent">
 
@@ -47,8 +20,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/prof_card_exit"
+                android:layout_width="74dp"
+                android:layout_height="33dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="305dp"
+                android:layout_marginLeft="305dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:cardCornerRadius="30dp">
 
+                <Button
+                    android:id="@+id/prof_button_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red"
+                    android:text="خروج"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/prof_pass_i"
+                    app:layout_constraintVertical_bias="0.578" />
+
+            </androidx.cardview.widget.CardView>
             <RelativeLayout
+                android:id="@+id/prof_rl1"
                 android:layout_width="409dp"
                 android:layout_height="457dp"
                 android:layout_alignParentStart="true"
@@ -59,6 +61,7 @@
                 android:layout_marginLeft="-1dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="2dp"
+                android:visibility="gone"
                 android:layout_marginRight="2dp">
 
                 <androidx.cardview.widget.CardView
@@ -327,7 +330,11 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </RelativeLayout>
-
+            <RelativeLayout
+                android:id="@+id/prof_rl2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
             <TextView
                 android:id="@+id/prof_list1_label"
                 android:layout_width="wrap_content"
@@ -342,7 +349,7 @@
                 android:id="@+id/prof_list1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
+            </RelativeLayout>
 
 
         </LinearLayout>

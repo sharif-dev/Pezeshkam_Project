@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,10 +54,9 @@ public class Profile extends AppCompatActivity {
     TextInputEditText user_i, occup_i, phone_i, pass_i, email_i;
     CardView card_submit, card_reserve, card_exit;
     ProgressBar progressBar;
-    ScrollView scrollView;
     ImageView image;
     ActionBar actionBar;
-
+    RelativeLayout rl1, rl2;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -74,7 +72,7 @@ public class Profile extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(R.color.toolbar));
         getComponents();
         getInitDatas();
-        clickExit();
+        clickListeners();
         profileHandler();
     }
 
@@ -111,7 +109,6 @@ public class Profile extends AppCompatActivity {
     }
 
     private void getComponents() {
-        scrollView = findViewById(R.id.prof_scroll);
         progressBar = findViewById(R.id.prof_progressbar);
         user_t = findViewById(R.id.prof_user_t);
         user_i = findViewById(R.id.prof_user_i);
@@ -132,11 +129,11 @@ public class Profile extends AppCompatActivity {
         image = findViewById(R.id.prof_image);
         exit = findViewById(R.id.prof_button_exit);
         card_exit = findViewById(R.id.prof_card_exit);
-        exit.setVisibility(View.GONE);
-        card_exit.setVisibility(View.GONE);
+        rl1 = findViewById(R.id.prof_rl1);
+        rl2 = findViewById(R.id.prof_rl2);
     }
 
-    private void clickExit() {
+    private void clickListeners() {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,11 +143,18 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        reserve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateReserveActivity.class);
+                intent.putExtra("id", uID);
+                startActivity(intent);
+            }
+        });
     }
 
 
     public void getInitDatas() {
-        scrollView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         final Context cx = this;
         CountDownTimer timer = new CountDownTimer(2000, 1000) {
@@ -183,13 +187,14 @@ public class Profile extends AppCompatActivity {
             toast.setText("نتیجه ای یافت نشد");
             toast.show();
         } else if (msg.what == NON_EMPTY_RESULT) {
-            scrollView.setVisibility(View.VISIBLE);
             setDatas((com.example.pezeshkam.Models.Profile) msg.obj);
             actionBar.setTitle(((com.example.pezeshkam.Models.Profile) msg.obj).getUsername());
             if (uID == pID)
                 seenByOwner();
              else
                 seenByOthers();
+             rl1.setVisibility(View.VISIBLE);
+             rl2.setVisibility(View.VISIBLE);
         } else if (msg.what == RESQUEST_FAILED) {
             toast.setText("درخواست با خطا مواجه شد");
             toast.show();
