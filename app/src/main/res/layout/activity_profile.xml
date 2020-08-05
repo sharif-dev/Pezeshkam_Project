@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layoutDirection="rtl"
-    >
+    android:layoutDirection="rtl">
     <ProgressBar
         android:id="@+id/prof_progressbar"
         android:layout_width="wrap_content"
@@ -21,299 +20,310 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <RelativeLayout
-                android:layout_width="409dp"
-                android:layout_height="443dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="-1dp"
-                android:layout_marginLeft="-1dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginRight="2dp">
+        android:layout_width="409dp"
+        android:layout_height="525dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        >
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/prof_card_reserve"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/prof_card_reserve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="300dp"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="30dp"
+            android:layout_toLeftOf="@id/prof_card_image">
+            <Button
+                android:id="@+id/prof_button_create_reserve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/createReserve"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:text="ایجاد رزرو"
+                android:textSize="17dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/prof_card_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp"
+            app:cardCornerRadius="70dp">
+
+            <ImageView
+                android:id="@+id/prof_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:srcCompat="@drawable/me" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="374dp"
+            android:id="@+id/constraint2"
+            android:layout_below="@+id/prof_card_image"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-5dp"
+            android:layout_marginLeft="-5dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="-5dp"
+            android:layoutDirection="ltr">
+
+            <TextView
+                android:id="@+id/prof_user_l"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginRight="48dp"
+                android:text="نام کاربری"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/prof_user_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="علیرضا دیزجی"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.775"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prof_user_l" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/prof_user_i"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:layout_marginTop="36dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.737"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <TextView
+                android:id="@+id/prof_phone_l"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:text="شماره تماس"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.86"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prof_user_l" />
+
+            <TextView
+                android:id="@+id/prof_phone_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="84dp"
+                android:layout_marginRight="84dp"
+                android:text="۰۹۳۰۲۳۷۷۶۵۱"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prof_phone_l" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/prof_phone_i"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.737"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prof_user_i">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <TextView
+                android:id="@+id/prof_pass_l"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginRight="48dp"
+                android:text="رمز عبور"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prof_user_l" />
+
+            <TextView
+                android:id="@+id/prof_occup_l"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="شغل"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/prof_user_l"
+                app:layout_constraintHorizontal_bias="0.566"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/prof_email_l"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="92dp"
+                android:text="ایمیل"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/prof_user_l"
+                app:layout_constraintHorizontal_bias="0.564"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/prof_pass_i"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="180dp"
+                android:textSize="12dp"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.737"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/prof_card_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                app:cardCornerRadius="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/prof_pass_i">
+                <Button
+                    android:id="@+id/prof_button_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginStart="300dp"
-                    android:layout_marginLeft="300dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_toLeftOf="@id/prof_card_image"
-                    app:cardCornerRadius="30dp">
+                    android:text="ثبت اطلاعات"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:background="@color/green"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/prof_pass_i"
+                    app:layout_constraintVertical_bias="0.578" />
 
-                    <Button
-                        android:id="@+id/prof_button_create_reserve"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/createReserve"
-                        android:text="ایجاد رزرو"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="17dp"
-                        android:textStyle="bold" />
-                </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/prof_card_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="15dp"
-                    app:cardCornerRadius="70dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/prof_occup_i"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:layout_marginTop="36dp"
+                app:layout_constraintEnd_toStartOf="@+id/prof_user_i"
+                app:layout_constraintHorizontal_bias="0.508"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/prof_image"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        app:srcCompat="@drawable/me" />
-                </androidx.cardview.widget.CardView>
+            </com.google.android.material.textfield.TextInputEditText>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraint2"
-                    android:layout_width="match_parent"
-                    android:layout_height="307dp"
-                    android:layout_below="@+id/prof_card_image"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="15dp"
-                    android:layoutDirection="ltr">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/prof_email_i"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:layout_marginTop="112dp"
+                app:layout_constraintEnd_toStartOf="@+id/prof_user_i"
+                app:layout_constraintHorizontal_bias="0.317"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/prof_user_l"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="48dp"
-                        android:layout_marginRight="48dp"
-                        android:text="نام کاربری"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+            </com.google.android.material.textfield.TextInputEditText>
 
-                    <TextView
-                        android:id="@+id/prof_user_t"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="علیرضا دیزجی"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.775"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/prof_user_l" />
+            <TextView
+                android:id="@+id/prof_occup_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="متخصص دندانپزشکی"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/prof_user_i"
+                app:layout_constraintHorizontal_bias="0.561"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prof_occup_l" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/prof_user_i"
-                        android:layout_width="125dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="36dp"
-                        android:textSize="12dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.737"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/prof_email_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="alirezadizaji@yahoo.com"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/prof_user_i"
+                app:layout_constraintHorizontal_bias="0.188"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prof_email_l" />
 
-                    </com.google.android.material.textfield.TextInputEditText>
-
-                    <TextView
-                        android:id="@+id/prof_phone_l"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="56dp"
-                        android:text="شماره تماس"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.86"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/prof_user_l" />
-
-                    <TextView
-                        android:id="@+id/prof_phone_t"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="84dp"
-                        android:layout_marginRight="84dp"
-                        android:text="۰۹۳۰۲۳۷۷۶۵۱"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/prof_phone_l" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/prof_phone_i"
-                        android:layout_width="125dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:textSize="12dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.737"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/prof_user_i">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-
-                    <TextView
-                        android:id="@+id/prof_pass_l"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="120dp"
-                        android:layout_marginEnd="48dp"
-                        android:layout_marginRight="48dp"
-                        android:text="رمز عبور"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/prof_user_l" />
-
-                    <TextView
-                        android:id="@+id/prof_occup_l"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="شغل"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/prof_user_l"
-                        app:layout_constraintHorizontal_bias="0.566"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/prof_email_l"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="92dp"
-                        android:text="ایمیل"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/prof_user_l"
-                        app:layout_constraintHorizontal_bias="0.564"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/prof_pass_i"
-                        android:layout_width="125dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="180dp"
-                        android:inputType="textPassword"
-                        android:textSize="12dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.737"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/prof_card_submit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        app:cardCornerRadius="30dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/prof_pass_i">
-
-                        <Button
-                            android:id="@+id/prof_button_submit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/green"
-                            android:text="ثبت اطلاعات"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="16dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/prof_pass_i"
-                            app:layout_constraintVertical_bias="0.578" />
-
-                    </androidx.cardview.widget.CardView>
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/prof_occup_i"
-                        android:layout_width="125dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="36dp"
-                        android:textSize="12dp"
-                        app:layout_constraintEnd_toStartOf="@+id/prof_user_i"
-                        app:layout_constraintHorizontal_bias="0.508"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/prof_email_i"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="112dp"
-                        android:textSize="12dp"
-                        app:layout_constraintEnd_toStartOf="@+id/prof_user_i"
-                        app:layout_constraintHorizontal_bias="0.317"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                    </com.google.android.material.textfield.TextInputEditText>
-
-                    <TextView
-                        android:id="@+id/prof_occup_t"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="متخصص دندانپزشکی"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/prof_user_i"
-                        app:layout_constraintHorizontal_bias="0.561"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/prof_occup_l" />
-
-                    <TextView
-                        android:id="@+id/prof_email_t"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="alirezadizaji@yahoo.com"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/prof_user_i"
-                        app:layout_constraintHorizontal_bias="0.188"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/prof_email_l" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
             <TextView
                 android:id="@+id/prof_list1_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="25dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
+                android:layout_marginTop="15dp"
                 android:text="وقت های خالی" />
 
             <com.example.pezeshkam.Components.MyListView
                 android:id="@+id/prof_list1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/prof_list2_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:text="وقت های خالی"/>
+
+            <com.example.pezeshkam.Components.MyListView
+                android:id="@+id/prof_list2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
 
         </LinearLayout>
     </ScrollView>

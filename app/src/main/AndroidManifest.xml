@@ -13,6 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+<!--        <activity_homepage-->
+<!--            android:name=".Activities.CreateReserveActivity"-->
+<!--            android:parentActivityName=".Activities.Profile">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity_homepage>-->
+
         <activity android:name=".Activities.Homepage"
             android:theme="@style/AppTheme.NoActionBar"
             >
@@ -31,7 +41,6 @@
             tools:ignore="DuplicateActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
