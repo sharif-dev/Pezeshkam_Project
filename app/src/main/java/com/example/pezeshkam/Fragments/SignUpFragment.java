@@ -15,12 +15,15 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pezeshkam.R;
 
@@ -121,7 +124,7 @@ public class SignUpFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 getString(R.string.signup_api_url), jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -157,13 +160,14 @@ public class SignUpFragment extends Fragment {
                 return params;
             }
         };
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(request);
     }
 
     private void sendSetProfileRequest(final String key) {
         final String username = usernameEditText.getText().toString().trim();
         String name = nameEditText.getText().toString().trim();
         String phone = phoneEditText.getText().toString().trim();
+
         final JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", username);
@@ -174,7 +178,7 @@ public class SignUpFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 getString(R.string.setprofile_api_url), jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -199,7 +203,7 @@ public class SignUpFragment extends Fragment {
                 return params;
             }
         };
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(request);
     }
 
     private void onCreateAccountSuccessful(String username) {

@@ -28,6 +28,8 @@
     <string name="login_api_url">http://10.0.2.2:8000/api/rest-auth/login/</string>
     <string name="signup_api_url">http://10.0.2.2:8000/api/rest-auth/registration/</string>
     <string name="setprofile_api_url">http://10.0.2.2:8000/set_profile/</string>
+    <string name="getid_api_url">http://10.0.2.2:8000/get_id/</string>
+    <string name="create_reserve_api_url">http://10.0.2.2:8000/create_reservation/</string>
 
     <string name="date">تاریخ:</string>
     <string name="year">سال</string>

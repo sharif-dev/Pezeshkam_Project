@@ -14,14 +14,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-<!--        <activity_homepage-->
-<!--            android:name=".Activities.CreateReserveActivity"-->
-<!--            android:parentActivityName=".Activities.Profile">-->
+        <activity
+            android:name=".Activities.CreateReserveActivity"
+            android:parentActivityName=".Activities.LoginActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
-<!--        </activity_homepage>-->
+        </activity>
 
         <activity android:name=".Activities.Homepage"
             android:theme="@style/AppTheme.NoActionBar"
