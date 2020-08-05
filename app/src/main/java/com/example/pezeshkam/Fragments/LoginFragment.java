@@ -22,7 +22,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pezeshkam.Activities.CreateReserveActivity;
 import com.example.pezeshkam.Activities.Homepage;
 import com.example.pezeshkam.R;
 
@@ -108,7 +107,7 @@ public class LoginFragment extends Fragment {
                     public void onResponse(JSONObject response) {
 //                        System.out.println("RRR" + response);
                         progressBar.setVisibility(View.INVISIBLE);
-                        Intent intent = new Intent(getActivity(), CreateReserveActivity.class);
+                        Intent intent = new Intent(getActivity(), Homepage.class);
                         try {
                             intent.putExtra("token", response.get("key").toString());
                         } catch (JSONException e) {

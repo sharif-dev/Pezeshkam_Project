@@ -146,6 +146,9 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError) {
+                            showToast(getString(R.string.server_down_error));
+                        }
                         System.out.println("no - " + error);
                     }
         }) {
@@ -183,6 +186,9 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println("no2 - " + error);
+                        if (error instanceof TimeoutError) {
+                            showToast(getString(R.string.server_down_error));
+                        }
                     }
         }) {
             @Override
