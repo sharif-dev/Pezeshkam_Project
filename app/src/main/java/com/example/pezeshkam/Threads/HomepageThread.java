@@ -43,7 +43,7 @@ public class HomepageThread extends Thread {
     Context context;
     String URL;
     String token;
-    public static final HashMap<String, String> params = new HashMap<>();
+    public static HashMap<String, String> params = new HashMap<>();
     public HomepageThread(Handler handler, Context context, String URL, String token) {
         this.handler = handler;
         this.context = context;

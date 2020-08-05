@@ -2,12 +2,14 @@ package com.example.pezeshkam.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -32,10 +34,13 @@ import com.example.pezeshkam.R;
 import com.example.pezeshkam.Threads.ProfileThread1;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.HashMap;
+
 import static com.example.pezeshkam.Activities.Homepage.EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.NON_EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.REQUEST_SUCCEED;
 import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
+import static com.example.pezeshkam.Threads.HomepageThread.params;
 
 public class Profile extends AppCompatActivity {
 
@@ -45,10 +50,10 @@ public class Profile extends AppCompatActivity {
 
     ListView list1;
     TextView list1_l;
-    Button submit, reserve;
+    Button submit, reserve, exit;
     TextView user_t, occup_t, phone_t, pass_l, email_t;
     TextInputEditText user_i, occup_i, phone_i, pass_i, email_i;
-    CardView card_submit, card_reserve;
+    CardView card_submit, card_reserve, card_exit;
     ProgressBar progressBar;
     ScrollView scrollView;
     ImageView image;
@@ -69,6 +74,7 @@ public class Profile extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(R.color.toolbar));
         getComponents();
         getInitDatas();
+        clickExit();
         profileHandler();
     }
 
@@ -79,8 +85,10 @@ public class Profile extends AppCompatActivity {
         email_i.setVisibility(View.GONE);
         pass_i.setVisibility(View.GONE);
         pass_l.setVisibility(View.GONE);
+
         submit.setVisibility(View.GONE);
         card_submit.setVisibility(View.GONE);
+
         reserve.setVisibility(View.GONE);
         card_reserve.setVisibility(View.GONE);
         list1_l.setText("تمامی رزروها");
@@ -91,6 +99,8 @@ public class Profile extends AppCompatActivity {
         occup_t.setVisibility(View.GONE);
         phone_t.setVisibility(View.GONE);
         email_t.setVisibility(View.GONE);
+        exit.setVisibility(View.VISIBLE);
+        card_exit.setVisibility(View.VISIBLE);
         if (!isDoctor) {
             reserve.setVisibility(View.GONE);
             card_reserve.setVisibility(View.GONE);
@@ -120,34 +130,24 @@ public class Profile extends AppCompatActivity {
         list1 = findViewById(R.id.prof_list1);
         list1_l = findViewById(R.id.prof_list1_label);
         image = findViewById(R.id.prof_image);
+        exit = findViewById(R.id.prof_button_exit);
+        card_exit = findViewById(R.id.prof_card_exit);
+        exit.setVisibility(View.GONE);
+        card_exit.setVisibility(View.GONE);
     }
-//    public TextWatcher searchTextWatcher() {
-//        return new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(final CharSequence charSequence, int i, int i1, int i2) {
-//                checkWaitingForTyping();
-//                timer = new CountDownTimer(1000, 500) {
-//                    @Override
-//                    public void onTick(long l) {
-//                    }
-//                    @Override
-//                    public void onFinish() {
-//                        typingFinished();
-//                    }
-//                };
-//                timer.start();
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        };
-//    }
+
+    private void clickExit() {
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                params = new HashMap<>();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     public void getInitDatas() {
         scrollView.setVisibility(View.GONE);
@@ -176,24 +176,6 @@ public class Profile extends AppCompatActivity {
         };
     }
 
-//    public void typingFinished() {
-//        requestAllowed = true;
-//        typing = false;
-//        String text = input.getText().toString();
-//        SearchThread doctorsThread = new SearchThread(text, handler);
-//        doctorsThread.start();
-//    }
-
-//    public void checkWaitingForTyping() {
-//        if (typing)
-//            timer.cancel();
-//        else {
-//            typing = true;
-//            listView.setVisibility(View.GONE);
-//            bar.setVisibility(View.VISIBLE);
-//            notFoundOrError.setVisibility(View.GONE);
-//        }
-//    }
 
     public void profileMessage(@NonNull Message msg) {
         Toast toast = Toast.makeText(this, "message", Toast.LENGTH_LONG);
@@ -206,11 +188,15 @@ public class Profile extends AppCompatActivity {
             actionBar.setTitle(((com.example.pezeshkam.Models.Profile) msg.obj).getUsername());
             if (uID == pID)
                 seenByOwner();
-            else
+             else
                 seenByOthers();
         } else if (msg.what == RESQUEST_FAILED) {
             toast.setText("درخواست با خطا مواجه شد");
             toast.show();
+            if (uID == pID) {
+                exit.setVisibility(View.VISIBLE);
+                card_exit.setVisibility(View.VISIBLE);
+            }
         } else if (msg.what == REQUEST_SUCCEED) {
             toast.setText("درخواست با موفقیت انجام شد");
             toast.show();

@@ -1,10 +1,12 @@
 package com.example.pezeshkam.Activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.CountDownTimer;
@@ -76,6 +78,14 @@ public class Homepage extends AppCompatActivity {
         homepageHandler();
         getInitDatas();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 
     public TextWatcher searchTextWatcher() {
