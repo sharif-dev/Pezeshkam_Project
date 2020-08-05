@@ -12,4 +12,5 @@
     <color name="homepage_background">#F9FFFF</color>
     <color name="reserved">#977203</color>
     <color name="colorWhite">#fff</color>
+    <color name="red">#A60101</color>
 </resources>
