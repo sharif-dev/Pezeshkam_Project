@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".Activities.LoginActivity">
+    tools:context="com.example.pezeshkam.Activities.LoginActivity">
 
     <include layout="@layout/content_main" />
 

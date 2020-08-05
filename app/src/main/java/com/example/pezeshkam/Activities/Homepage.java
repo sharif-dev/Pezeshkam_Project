@@ -39,7 +39,6 @@ public class Homepage extends AppCompatActivity {
     TextInputEditText input;
     SearchView searchView;
     ImageView profile;
-    Toast toast;
     static Handler handler;
     boolean requestAllowed = false;
     boolean typing = false;
@@ -104,6 +103,15 @@ public class Homepage extends AppCompatActivity {
 
             }
         };
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 
     public void getInitDatas() {
