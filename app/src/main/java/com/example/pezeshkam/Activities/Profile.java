@@ -1,29 +1,44 @@
 package com.example.pezeshkam.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.util.Log;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.pezeshkam.Adapters.ProfileAdapter;
 import com.example.pezeshkam.R;
+import com.example.pezeshkam.Threads.ProfileThread1;
 import com.google.android.material.textfield.TextInputEditText;
+
+import static com.example.pezeshkam.Activities.Homepage.EMPTY_RESULT;
+import static com.example.pezeshkam.Activities.Homepage.NON_EMPTY_RESULT;
+import static com.example.pezeshkam.Activities.Homepage.REQUEST_SUCCEED;
+import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
 
 public class Profile extends AppCompatActivity {
 
-    Integer uID, pID;
-    boolean isDoctor = false;
+    int uID, pID;
+    boolean isDoctor = true;
+    public static Handler profHandler;
 
     ListView list1, list2;
     TextView list1_l, list2_l;
@@ -33,27 +48,26 @@ public class Profile extends AppCompatActivity {
     CardView card_submit, card_reserve;
     ProgressBar progressBar;
     ScrollView scrollView;
+    ImageView image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         uID = bundle.getInt("uid");
-        pID = bundle.getInt("pid");
+        pID = Integer.parseInt(bundle.getString("pid"));
         setContentView(R.layout.activity_profile);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("پروفایل");
+
         getComponents();
-        scrollView.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
-        if (uID.equals(pID))
+        getInitDatas();
+        profileHandler();
+        if (uID == pID)
             seenByOwner();
         else
             seenByOthers();
-        Log.i("length: ", Integer.toString(TmpArrays.getInstance().getReserveCards().size()));
-        ArrayAdapter adapter1 = new ProfileAdapter(this, 0,
-                TmpArrays.getInstance().getReserveCards());
-        list1.setAdapter(adapter1);
     }
 
     private void seenByOthers() {
@@ -84,8 +98,7 @@ public class Profile extends AppCompatActivity {
             list2_l.setVisibility(View.INVISIBLE);
             list1_l.setText("وقت های گرفته شده");
         } else {
-            list1_l.setText("وقت های خالی");
-            list2_l.setText("وقت های پر");
+            list1_l.setText("تمامی رزروها");
         }
     }
 
@@ -110,6 +123,7 @@ public class Profile extends AppCompatActivity {
         list2 = findViewById(R.id.prof_list2);
         list1_l = findViewById(R.id.prof_list1_label);
         list2_l = findViewById(R.id.prof_list2_label);
+        image = findViewById(R.id.prof_image);
     }
 //    public TextWatcher searchTextWatcher() {
 //        return new TextWatcher() {
@@ -139,30 +153,32 @@ public class Profile extends AppCompatActivity {
 //        };
 //    }
 
-//    public void getInitDatas() {
-//        input.setVisibility(View.INVISIBLE);
-//        searchView.setVisibility(View.INVISIBLE);
-//        listView.setVisibility(View.INVISIBLE);
-//        timer = new CountDownTimer(2000, 1000) {
-//            @Override
-//            public void onTick(long l) {}
-//            @Override
-//            public void onFinish() {
-//                HDatasThread thread = new HDatasThread(2, handler);
-//                thread.start();
-//            }
-//        }.start();
-//    }
+    public void getInitDatas() {
+        scrollView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        final Context cx = this;
+        CountDownTimer timer = new CountDownTimer(2000, 1000) {
+            @Override
+            public void onTick(long l) {
+            }
 
-//    public void homepageHandler() {
-//        handler = new Handler(Looper.getMainLooper()) {
-//            @Override
-//            public void handleMessage(@NonNull Message msg) {
-//                super.handleMessage(msg);
-//                homepageMessage(msg);
-//            }
-//        };
-//    }
+            @Override
+            public void onFinish() {
+                ProfileThread1 thread = new ProfileThread1(profHandler, pID, cx);
+                thread.start();
+            }
+        }.start();
+    }
+
+    public void profileHandler() {
+        profHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                profileMessage(msg);
+            }
+        };
+    }
 
 //    public void typingFinished() {
 //        requestAllowed = true;
@@ -183,26 +199,44 @@ public class Profile extends AppCompatActivity {
 //        }
 //    }
 
-//    public void homepageMessage(@NonNull Message msg) {
-//        bar.setVisibility(View.INVISIBLE);
-//        if (msg.what == EMPTY_RESULT) {
-//             notFoundOrError.setVisibility(View.VISIBLE);
-//             notFoundOrError.setText("نتیجه‌ای یافت نشد :((");
-//        } else if (msg.what == NON_EMPTY_RESULT) {
-//            listView.setVisibility(View.VISIBLE);
-//        } else if (msg.what == RESQUEST_FAILED) {
-//            notFoundOrError.setText("درخواست با خطا مواجه شد :((");
-//            notFoundOrError.setVisibility(View.VISIBLE);
-//        } else {
-//            if (msg.what == PROFILE_PICTURE_NOT_RECEIVED) {
-//                notFoundOrError.setText("عدم ارتباط با سرور :((");
-//                notFoundOrError.setVisibility(View.VISIBLE);
-//            } else if (msg.what == PROFILE_PICTURE_FETCHED) {
-//                listView.setVisibility(View.VISIBLE);
-//            }
-//            searchView.setVisibility(View.VISIBLE);
-//            input.setVisibility(View.VISIBLE);
-//        }
-//    }
+    public void profileMessage(@NonNull Message msg) {
+        Toast toast = Toast.makeText(this, "message", Toast.LENGTH_LONG);
+        if (msg.what == EMPTY_RESULT) {
+            toast.setText("نتیجه ای یافت نشد");
+            toast.show();
+        } else if (msg.what == NON_EMPTY_RESULT) {
+            scrollView.setVisibility(View.VISIBLE);
+            setDatas((com.example.pezeshkam.Models.Profile) msg.obj);
+        } else if (msg.what == RESQUEST_FAILED) {
+            toast.setText("درخواست با خطا مواجه شد");
+            toast.show();
+        } else if (msg.what == REQUEST_SUCCEED) {
+            toast.setText("درخواست با موفقیت انجام شد");
+            toast.show();
+        }
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void setDatas(com.example.pezeshkam.Models.Profile profile) {
+        String username = profile.getUsername();
+        String phone = profile.getPhone();
+        String occupation = profile.getOccupation();
+        String avatar = profile.getAvatar();
+        if (uID == pID) {
+            user_i.setText(username);
+            occup_i.setText(occupation);
+            phone_i.setText(phone);
+        } else {
+            user_t.setText(username);
+            occup_t.setText(occupation);
+            phone_t.setText(phone);
+        }
+        ArrayAdapter adapter1 = new ProfileAdapter(this, 0, profile.getCards(),
+                uID, pID, true);
+        list1.setAdapter(adapter1);
+
+        Glide.with(this).load(avatar).into(image);
+
+    }
 }
 
