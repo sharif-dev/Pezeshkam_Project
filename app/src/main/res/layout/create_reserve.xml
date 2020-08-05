@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activities.CreateReserveActivity">
+
+    <LinearLayout
+        android:id="@+id/date_segment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="80dp"
+        android:paddingHorizontal="100dp"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <EditText
+            android:id="@+id/reserve_year_text"
+            style="@style/CreateReserveEditTextStyle"
+            android:maxLength="4"
+            android:hint="@string/year"
+            android:layout_weight="0.8"
+            android:layout_marginHorizontal="4dp"
+            />
+        <EditText
+            android:id="@+id/reserve_month_text"
+            style="@style/CreateReserveEditTextStyle"
+            android:maxLength="2"
+            android:hint="@string/month"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            />
+        <EditText
+            android:id="@+id/reserve_day_text"
+            style="@style/CreateReserveEditTextStyle"
+            android:maxLength="2"
+            android:hint="@string/day"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:layout_marginHorizontal="8dp"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/set_begin_time_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:paddingHorizontal="10dp"
+        android:text="@string/select_begin_time"
+        android:background="@drawable/signup_btn_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_segment" />
+
+    <TextView
+        android:id="@+id/begin_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/set_begin_time_btn" />
+
+    <Button
+        android:id="@+id/set_end_time_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="10dp"
+        android:text="@string/select_end_time"
+        android:background="@drawable/signup_btn_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/begin_time_text" />
+
+    <TextView
+        android:id="@+id/end_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/set_end_time_btn" />
+
+    <LinearLayout
+        android:id="@+id/reserve_time_segment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/end_time_text">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/minute"
+            android:layout_marginHorizontal="6dp"
+            android:textSize="20sp"
+            />
+        <EditText
+            android:id="@+id/time_per_reserve"
+            style="@style/CreateReserveEditTextStyle"
+            android:layout_width="40dp"
+            android:maxLength="2"
+            android:layout_weight="1"
+            android:text="@string/default_reserve_time"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/end_time_text"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_per_reserve"
+            android:layout_marginHorizontal="6dp"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/create_reserve_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/create"
+        android:textSize="24sp"
+        android:padding="16dp"
+        android:background="@drawable/login_btn_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reserve_time_segment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
