@@ -11,4 +11,5 @@
     <color name="toolbar">#9AAAFF</color>
     <color name="homepage_background">#F9FFFF</color>
     <color name="reserved">#977203</color>
+    <color name="colorWhite">#fff</color>
 </resources>
