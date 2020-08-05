@@ -1,7 +1,9 @@
 package com.example.pezeshkam.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -50,7 +52,10 @@ public class Profile extends AppCompatActivity {
     ProgressBar progressBar;
     ScrollView scrollView;
     ImageView image;
+    ActionBar actionBar;
 
+
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +64,9 @@ public class Profile extends AppCompatActivity {
         uID = bundle.getInt("uid");
         pID = Integer.parseInt(bundle.getString("pid"));
         setContentView(R.layout.activity_profile);
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setTitle("پروفایل");
-
+        actionBar.setBackgroundDrawable(new ColorDrawable(R.color.toolbar));
         getComponents();
         getInitDatas();
         profileHandler();
@@ -198,6 +203,7 @@ public class Profile extends AppCompatActivity {
         } else if (msg.what == NON_EMPTY_RESULT) {
             scrollView.setVisibility(View.VISIBLE);
             setDatas((com.example.pezeshkam.Models.Profile) msg.obj);
+            actionBar.setTitle(((com.example.pezeshkam.Models.Profile) msg.obj).getUsername());
             if (uID == pID)
                 seenByOwner();
             else
