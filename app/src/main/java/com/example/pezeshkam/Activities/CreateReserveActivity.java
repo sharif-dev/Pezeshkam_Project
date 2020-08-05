@@ -76,7 +76,6 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dictionary dict = new Hashtable();
                 String y_str = ((EditText) findViewById(R.id.reserve_year_text)).getText().toString();
                 String m_str = ((EditText) findViewById(R.id.reserve_month_text)).getText().toString();
                 String d_str = ((EditText) findViewById(R.id.reserve_day_text)).getText().toString();
