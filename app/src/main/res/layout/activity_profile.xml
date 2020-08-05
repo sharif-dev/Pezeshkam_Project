@@ -12,7 +12,6 @@
         android:layout_marginTop="260dp"
         android:layout_marginRight="180dp"/>
     <ScrollView
-        android:id="@+id/prof_scroll"
         android:layout_width="fill_parent"
         android:layout_height="match_parent">
 

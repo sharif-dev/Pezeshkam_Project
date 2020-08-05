@@ -32,10 +32,13 @@ import com.example.pezeshkam.R;
 import com.example.pezeshkam.Threads.ProfileThread1;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.HashMap;
+
 import static com.example.pezeshkam.Activities.Homepage.EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.NON_EMPTY_RESULT;
 import static com.example.pezeshkam.Activities.Homepage.REQUEST_SUCCEED;
 import static com.example.pezeshkam.Activities.Homepage.RESQUEST_FAILED;
+import static com.example.pezeshkam.Threads.HomepageThread.params;
 
 public class Profile extends AppCompatActivity {
 
@@ -45,13 +48,13 @@ public class Profile extends AppCompatActivity {
 
     ListView list1;
     TextView list1_l;
-    Button submit, reserve;
+    Button submit, reserve, exit;
     TextView user_t, occup_t, phone_t, pass_l, email_t;
     TextInputEditText user_i, occup_i, phone_i, pass_i, email_i;
-    CardView card_submit, card_reserve;
+    CardView card_submit, card_reserve, card_exit;
     ProgressBar progressBar;
-    ScrollView scrollView;
     ImageView image;
+    RelativeLayout rl1, rl2;
     ActionBar actionBar;
 
 
@@ -68,6 +71,7 @@ public class Profile extends AppCompatActivity {
         actionBar.setTitle("پروفایل");
         actionBar.setBackgroundDrawable(new ColorDrawable(R.color.toolbar));
         getComponents();
+        clickListeners();
         getInitDatas();
         profileHandler();
     }
@@ -91,6 +95,8 @@ public class Profile extends AppCompatActivity {
         occup_t.setVisibility(View.GONE);
         phone_t.setVisibility(View.GONE);
         email_t.setVisibility(View.GONE);
+        exit.setVisibility(View.VISIBLE);
+        card_exit.setVisibility(View.VISIBLE);
         if (!isDoctor) {
             reserve.setVisibility(View.GONE);
             card_reserve.setVisibility(View.GONE);
@@ -101,7 +107,6 @@ public class Profile extends AppCompatActivity {
     }
 
     private void getComponents() {
-        scrollView = findViewById(R.id.prof_scroll);
         progressBar = findViewById(R.id.prof_progressbar);
         user_t = findViewById(R.id.prof_user_t);
         user_i = findViewById(R.id.prof_user_i);
@@ -120,37 +125,14 @@ public class Profile extends AppCompatActivity {
         list1 = findViewById(R.id.prof_list1);
         list1_l = findViewById(R.id.prof_list1_label);
         image = findViewById(R.id.prof_image);
+        rl1 = findViewById(R.id.prof_rl1);
+        rl2 = findViewById(R.id.prof_rl2);
+        exit = findViewById(R.id.prof_button_exit);
+        card_exit = findViewById(R.id.prof_card_exit);
     }
-//    public TextWatcher searchTextWatcher() {
-//        return new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(final CharSequence charSequence, int i, int i1, int i2) {
-//                checkWaitingForTyping();
-//                timer = new CountDownTimer(1000, 500) {
-//                    @Override
-//                    public void onTick(long l) {
-//                    }
-//                    @Override
-//                    public void onFinish() {
-//                        typingFinished();
-//                    }
-//                };
-//                timer.start();
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        };
-//    }
+
 
     public void getInitDatas() {
-        scrollView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         final Context cx = this;
         CountDownTimer timer = new CountDownTimer(2000, 1000) {
@@ -176,24 +158,24 @@ public class Profile extends AppCompatActivity {
         };
     }
 
-//    public void typingFinished() {
-//        requestAllowed = true;
-//        typing = false;
-//        String text = input.getText().toString();
-//        SearchThread doctorsThread = new SearchThread(text, handler);
-//        doctorsThread.start();
-//    }
-
-//    public void checkWaitingForTyping() {
-//        if (typing)
-//            timer.cancel();
-//        else {
-//            typing = true;
-//            listView.setVisibility(View.GONE);
-//            bar.setVisibility(View.VISIBLE);
-//            notFoundOrError.setVisibility(View.GONE);
-//        }
-//    }
+    private void clickListeners() {
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                params = new HashMap<>();
+                startActivity(intent);
+            }
+        });
+        reserve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateReserveActivity.class);
+                intent.putExtra("id", uID);
+                startActivity(intent);
+            }
+        });
+    }
 
     public void profileMessage(@NonNull Message msg) {
         Toast toast = Toast.makeText(this, "message", Toast.LENGTH_LONG);
@@ -201,20 +183,26 @@ public class Profile extends AppCompatActivity {
             toast.setText("نتیجه ای یافت نشد");
             toast.show();
         } else if (msg.what == NON_EMPTY_RESULT) {
-            scrollView.setVisibility(View.VISIBLE);
             setDatas((com.example.pezeshkam.Models.Profile) msg.obj);
             actionBar.setTitle(((com.example.pezeshkam.Models.Profile) msg.obj).getUsername());
             if (uID == pID)
                 seenByOwner();
             else
                 seenByOthers();
+            rl1.setVisibility(View.VISIBLE);
+            rl2.setVisibility(View.VISIBLE);
         } else if (msg.what == RESQUEST_FAILED) {
             toast.setText("درخواست با خطا مواجه شد");
             toast.show();
+            if (uID == pID) {
+                exit.setVisibility(View.VISIBLE);
+                card_exit.setVisibility(View.VISIBLE);
+            }
         } else if (msg.what == REQUEST_SUCCEED) {
             toast.setText("درخواست با موفقیت انجام شد");
             toast.show();
         }
+
         progressBar.setVisibility(View.GONE);
     }
 
