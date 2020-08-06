@@ -46,6 +46,6 @@
     <string name="incorrect_reserve_time_error">لطفا زمان مناسب انتخاب نمایید</string>
     <string name="empty_reserve_time_error">لطفا زمان هر رزرو را مشخص نمایید</string>
     <string name="cant_create_reserve_error">در زمان وارد شده نمیتوان رزرو ایجاد کرد</string>
-    <string name="successful_create_reserve_msg">وقت های رزرو با موفقیت ایجاد شد</string>
+    <string name="successful_create_reserve_msg">وقت رزرو با موفقیت ایجاد شد</string>
     <string name="unsuccessful_create_reserve_error">خطا در ایجاد زمان های رزرو</string>
 </resources>

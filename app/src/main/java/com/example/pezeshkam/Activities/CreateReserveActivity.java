@@ -160,7 +160,7 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println("A" + response);
-                        showToast(((end_hour - begin_hour) * 60) + getString(R.string.successful_create_reserve_msg));
+                        showToast((((end_hour - begin_hour) * 60 + end_minute - begin_minute) / period) + " " + getString(R.string.successful_create_reserve_msg));
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -168,7 +168,8 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
                         if (error instanceof TimeoutError) {
                             showToast(getString(R.string.server_down_error));
                         } else if (error instanceof ParseError){
-                            showToast(getString(R.string.successful_create_reserve_msg));
+                            System.out.println("XYZ " + error);
+                            showToast((((end_hour - begin_hour) * 60 + end_minute - begin_minute) / period) + " " + getString(R.string.successful_create_reserve_msg));
                         } else {
                             showToast(getString(R.string.unsuccessful_create_reserve_error));
                         }
