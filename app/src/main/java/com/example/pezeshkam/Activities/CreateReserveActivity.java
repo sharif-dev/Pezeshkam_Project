@@ -53,6 +53,7 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
         actionBar.setBackgroundDrawable(new ColorDrawable(R.color.toolbar));
         requestQueue = Volley.newRequestQueue(this);
         doctor_id = getIntent().getIntExtra("id", 1);
+        System.out.println("doctor id = " + doctor_id);
         handler = new Handler();
 
         findViewById(R.id.set_begin_time_btn).setOnClickListener(new View.OnClickListener() {
@@ -159,7 +160,7 @@ public class CreateReserveActivity extends AppCompatActivity implements TimePick
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println("A" + response);
-                        showToast(getString(R.string.successful_create_reserve_msg));
+                        showToast(((end_hour - begin_hour) * 60) + getString(R.string.successful_create_reserve_msg));
                     }
                 }, new Response.ErrorListener() {
                     @Override
